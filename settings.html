@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings & Security — Netflix Clone</title>
+    <meta name="description" content="Manage your Netflix account credentials, email verification, password security, and viewing profiles.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="settings-page-body">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar scrolled" role="banner">
+        <div class="nav-left">
+            <a href="index.html" class="logo" aria-label="Netflix Clone Home">NETFLIX</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+            <nav class="nav-links" id="nav-links" role="navigation" aria-label="Main Navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link">Browse Movies</a>
+                <a href="index.html#my-list-section" class="nav-link">My List</a>
+                <a href="activity.html" class="nav-link">Activity</a>
+                <a href="settings.html" class="nav-link active" aria-current="page">Account</a>
+            </nav>
+        </div>
+        <div class="nav-actions">
+            <div id="nav-auth-container" class="nav-auth-group">
+                <!-- Dynamically populated auth & profile switcher -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Settings Container -->
+    <main class="settings-main">
+        <!-- Unauthenticated Access Guard -->
+        <div id="unauth-view" class="profile-guard-card" style="display: none;">
+            <div class="guard-icon" aria-hidden="true">🔒</div>
+            <h1 class="guard-title">Sign In Required</h1>
+            <p class="guard-message">Please sign in to view and manage your Netflix account security and settings.</p>
+            <a href="login.html" class="btn btn-auth-submit">Sign In to Continue</a>
+            <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
+        </div>
+
+        <!-- Authenticated Settings Container -->
+        <div id="auth-view" class="settings-container" style="display: none;">
+            
+            <div class="settings-header">
+                <h1 class="settings-page-title">Account Settings</h1>
+                <p class="settings-page-subtitle">Manage your account authentication, password security, and viewing preferences.</p>
+            </div>
+
+            <!-- 1. ACCOUNT OVERVIEW CARD -->
+            <section class="settings-card" aria-labelledby="heading-account">
+                <h2 class="settings-card-title" id="heading-account">Account Overview</h2>
+                
+                <div class="settings-row">
+                    <div class="settings-col-label">
+                        <span class="row-label">Account Email</span>
+                    </div>
+                    <div class="settings-col-value">
+                        <span class="user-email-text" id="settings-user-email">user@example.com</span>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div class="settings-col-label">
+                        <span class="row-label">Email Status</span>
+                    </div>
+                    <div class="settings-col-value">
+                        <div class="verification-status-wrapper">
+                            <span class="badge-verification" id="badge-email-status">Checking...</span>
+                            <button type="button" class="btn-resend-verification" id="btn-resend-verification" style="display: none;">
+                                Resend Verification Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div class="settings-col-label">
+                        <span class="row-label">Membership</span>
+                    </div>
+                    <div class="settings-col-value">
+                        <span class="member-since-text" id="settings-member-since">Member</span>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div class="settings-col-label">
+                        <span class="row-label">Viewing Profile</span>
+                    </div>
+                    <div class="settings-col-value settings-profile-col">
+                        <div class="active-profile-summary" id="active-profile-summary">
+                            <span class="summary-avatar" id="summary-avatar">👤</span>
+                            <span class="summary-name" id="summary-name">Profile</span>
+                        </div>
+                        <div class="profile-links-row">
+                            <a href="profiles.html" class="settings-action-link">Switch Profile</a>
+                            <span class="divider-dot">•</span>
+                            <a href="profiles.html" class="settings-action-link">Manage Profiles</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. SECURITY & PASSWORD CARD -->
+            <section class="settings-card" aria-labelledby="heading-security">
+                <h2 class="settings-card-title" id="heading-security">Security & Password</h2>
+                <p class="settings-card-desc">Update your password to keep your account safe.</p>
+
+                <form id="form-change-password" class="settings-form">
+                    <div class="form-group">
+                        <label for="input-current-password" class="form-label">Current Password</label>
+                        <input type="password" id="input-current-password" class="form-input" placeholder="Enter current password" required autocomplete="current-password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-new-password" class="form-label">New Password (min 6 characters)</label>
+                        <input type="password" id="input-new-password" class="form-input" placeholder="Enter new password" required minlength="6" autocomplete="new-password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-confirm-password" class="form-label">Confirm New Password</label>
+                        <input type="password" id="input-confirm-password" class="form-input" placeholder="Re-enter new password" required minlength="6" autocomplete="new-password">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-save-password" id="btn-save-password">
+                            Update Password
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 3. SESSION CARD -->
+            <section class="settings-card" aria-labelledby="heading-session">
+                <h2 class="settings-card-title" id="heading-session">Session Management</h2>
+                <div class="settings-row no-border">
+                    <div class="settings-col-label">
+                        <span class="row-label">Sign Out</span>
+                        <p class="row-sublabel">Sign out of your Netflix account on this device.</p>
+                    </div>
+                    <div class="settings-col-value">
+                        <button type="button" class="btn btn-secondary-action" id="btn-settings-logout">
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. DANGER ZONE CARD -->
+            <section class="settings-card danger-zone-card" aria-labelledby="heading-danger">
+                <h2 class="settings-card-title danger-title" id="heading-danger">Danger Zone</h2>
+                <div class="settings-row no-border">
+                    <div class="settings-col-label">
+                        <span class="row-label">Delete Account</span>
+                        <p class="row-sublabel">Permanently delete your account and all associated viewing history, profiles, and My List.</p>
+                    </div>
+                    <div class="settings-col-value">
+                        <button type="button" class="btn btn-danger-action" id="btn-open-delete-modal">
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="settings-modal" id="delete-account-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+        <div class="settings-modal-overlay" id="delete-modal-overlay"></div>
+        <div class="settings-modal-content">
+            <div class="modal-danger-header">
+                <span class="modal-danger-icon" aria-hidden="true">⚠️</span>
+                <h2 class="modal-danger-title" id="modal-delete-title">Delete Account Permanently</h2>
+            </div>
+            <p class="modal-danger-text">
+                This action <strong>cannot be undone</strong>. This will permanently delete your Netflix account, all viewing profiles, watch history, recommendations, and saved movies.
+            </p>
+
+            <form id="form-delete-account" class="delete-account-form">
+                <div class="form-group">
+                    <label for="input-delete-password" class="form-label">Current Password (Required for verification)</label>
+                    <input type="password" id="input-delete-password" class="form-input" placeholder="Enter current password" required autocomplete="current-password">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-delete-confirm" class="form-label">Type <strong>DELETE</strong> to confirm</label>
+                    <input type="text" id="input-delete-confirm" class="form-input" placeholder="DELETE" required autocomplete="off">
+                </div>
+
+                <div class="modal-actions-group">
+                    <button type="button" class="btn btn-secondary-action" id="btn-cancel-delete">Cancel</button>
+                    <button type="submit" class="btn btn-confirm-delete" id="btn-confirm-delete" disabled>
+                        Permanently Delete Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js" defer></script>
+
+    <!-- Application Scripts -->
+    <script src="js/config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/settings.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Center — Netflix Clone</title>
+    <meta name="description" content="View your account activity, movie updates, and notifications on Netflix Clone.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="activity-page-body">
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="navbar" aria-label="Main Navigation">
+            <a href="index.html" class="logo" aria-label="Netflix Clone Home">NETFLIX</a>
+
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+
+            <ul class="main-nav">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="browse.html" class="nav-link">Browse Movies</a></li>
+                <li><a href="index.html#my-list-section" class="nav-link" id="nav-my-list">My List</a></li>
+                <li><a href="notifications.html" class="nav-link active" aria-current="page">Activity</a></li>
+                <li><a href="settings.html" class="nav-link">Account</a></li>
+            </ul>
+
+            <div class="nav-auth-container" id="nav-auth-container">
+                <!-- Dynamically populated: Bell + Profile Badge / Sign In -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="activity-main-container">
+        <div class="activity-header">
+            <div class="activity-title-group">
+                <h1 class="activity-page-title">Activity Center</h1>
+                <p class="activity-subtitle">Stay up to date with your saved movies, watchlist changes, and account activity.</p>
+            </div>
+            <div class="activity-actions">
+                <button type="button" class="btn btn-secondary-action" id="btn-page-mark-all-read">
+                    ✓ Mark All as Read
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="activity-tabs" role="tablist" aria-label="Notification filters">
+            <button type="button" class="tab-btn active" id="tab-all" role="tab" aria-selected="true">
+                All Activity (<span id="count-all">0</span>)
+            </button>
+            <button type="button" class="tab-btn" id="tab-unread" role="tab" aria-selected="false">
+                Unread (<span id="count-unread">0</span>)
+            </button>
+        </div>
+
+        <!-- Notifications Container -->
+        <div class="activity-content" id="activity-content-area">
+            <div class="activity-loading" id="activity-loading">
+                <div class="section-loading">Loading your activity...</div>
+            </div>
+
+            <div class="activity-list" id="activity-list" style="display: none;"></div>
+
+            <!-- Empty State -->
+            <div class="activity-empty" id="activity-empty" style="display: none;">
+                <div class="empty-icon" aria-hidden="true">🔔</div>
+                <h2 class="empty-title">You're all caught up</h2>
+                <p class="empty-text">No new notifications right now. Check back after adding movies to your list or watching titles.</p>
+                <a href="browse.html" class="btn btn-primary">Discover Movies</a>
+            </div>
+
+            <!-- Error State -->
+            <div class="activity-error" id="activity-error" style="display: none;">
+                <p class="error-text">Unable to load notifications. Please check your connection.</p>
+                <button type="button" class="btn btn-auth-submit" id="btn-activity-retry">Retry</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Movie Details Modal (Shared component) -->
+    <div class="movie-modal" id="movie-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="movie-modal-title">
+        <div class="movie-modal-backdrop" id="modal-overlay"></div>
+        <div class="movie-modal-content">
+            <button type="button" class="movie-modal-close" id="movie-modal-close" aria-label="Close movie details">✕</button>
+
+            <div class="movie-modal-hero" id="modal-hero">
+                <img class="movie-modal-backdrop-image" id="modal-backdrop-img" alt="" loading="lazy">
+                <div class="modal-hero-gradient"></div>
+            </div>
+
+            <div class="movie-modal-body" id="modal-body">
+                <img class="movie-modal-poster" id="modal-poster-img" alt="" loading="lazy">
+                <div class="movie-modal-info">
+                    <h2 id="movie-modal-title"></h2>
+                    <div class="movie-modal-meta">
+                        <span class="movie-modal-rating" id="modal-rating"></span>
+                        <span class="movie-modal-date" id="modal-date"></span>
+                        <span class="movie-modal-runtime" id="modal-runtime"></span>
+                    </div>
+                    <div class="movie-modal-genres" id="modal-genres"></div>
+                    <p class="movie-modal-overview" id="modal-overview"></p>
+                    <div class="movie-modal-actions">
+                        <button type="button" class="movie-modal-trailer-btn" id="modal-trailer-btn">
+                            <span class="trailer-btn-icon" aria-hidden="true">▶</span>
+                            <span class="trailer-btn-text"> Watch Trailer</span>
+                        </button>
+                        <button type="button" class="movie-modal-watch" id="modal-watch-btn">▶ Watch Now</button>
+                        <button type="button" class="movie-modal-watchlist-btn" id="modal-watchlist-btn" aria-label="Add to My List" aria-pressed="false">
+                            <span class="watchlist-btn-icon" aria-hidden="true">+</span>
+                            <span class="watchlist-btn-text"> My List</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-modal-state" id="modal-state" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Dedicated Trailer Modal (Task 19) -->
+    <div class="trailer-modal" id="trailer-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Official Movie Trailer">
+        <div class="trailer-modal-overlay" id="trailer-overlay"></div>
+        <div class="trailer-modal-content">
+            <button type="button" class="trailer-modal-close" id="trailer-modal-close" aria-label="Close trailer video">✕</button>
+            <div class="trailer-video-wrapper" id="trailer-video-wrapper"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-question">Questions? Contact us.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse Movies</a>
+                <a href="profile.html">Account</a>
+                <a href="notifications.html">Activity</a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Netflix Clone — Educational Project</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js" defer></script>
+
+    <!-- Application Configuration & Scripts -->
+    <script src="js/config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/notifications.js" defer></script>
+</body>
+</html>

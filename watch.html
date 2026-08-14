@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Movie — Netflix Clone</title>
+    <meta name="description" content="Stream high-definition movies and sample trailers with custom player controls and automatic progress resume.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="watch-page-body">
+
+    <!-- Watch Header / Navigation -->
+    <header class="watch-navbar" role="banner">
+        <div class="watch-nav-left">
+            <button type="button" class="btn-watch-back" id="btn-watch-back" aria-label="Go back to previous page">
+                <span class="back-arrow" aria-hidden="true">←</span>
+                <span class="back-text">Back</span>
+            </button>
+            <a href="index.html" class="logo" aria-label="Netflix Clone Home">NETFLIX</a>
+        </div>
+        <div class="watch-nav-right">
+            <div id="nav-auth-container" class="nav-auth-group">
+                <!-- Dynamically populated profile switcher -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Player & Content Container -->
+    <main class="watch-main-content">
+
+        <!-- Error Guard State -->
+        <div id="watch-error-view" class="watch-error-container" style="display: none;">
+            <div class="watch-error-icon" aria-hidden="true">🎬</div>
+            <h1 class="watch-error-title" id="watch-error-title">Unable to Load Movie</h1>
+            <p class="watch-error-desc" id="watch-error-desc">The requested movie could not be found or video streaming is unavailable.</p>
+            <a href="index.html" class="btn btn-auth-submit">Return to Browse</a>
+        </div>
+
+        <!-- Active Video Player Container -->
+        <section id="watch-player-view" class="watch-player-section" aria-label="Video Player">
+            <div class="video-player-wrapper" id="video-player-wrapper" tabindex="0" role="region" aria-label="Video streaming player">
+                
+                <video id="netflix-video-player" class="netflix-video-element" playsinline preload="metadata">
+                    <p>Your browser does not support HTML5 video playback.</p>
+                </video>
+
+                <!-- Buffering Spinner Overlay -->
+                <div class="player-buffering-overlay" id="player-buffering" style="display: none;" aria-live="assertive">
+                    <div class="buffering-spinner"></div>
+                    <span class="buffering-text">Buffering...</span>
+                </div>
+
+                <!-- Center Big Play / Replay Overlay Button -->
+                <button type="button" class="center-play-overlay" id="center-play-btn" aria-label="Play video">
+                    <span class="center-play-icon" id="center-play-icon">▶</span>
+                </button>
+
+                <!-- Video Error State Overlay -->
+                <div class="player-error-overlay" id="player-error-overlay" style="display: none;">
+                    <span class="player-error-icon" aria-hidden="true">⚠️</span>
+                    <p class="player-error-message">Unable to stream this video right now.</p>
+                    <button type="button" class="btn btn-player-retry" id="btn-player-retry">Retry Playback</button>
+                </div>
+
+                <!-- Custom Netflix-Inspired Control Bar -->
+                <div class="custom-player-controls" id="custom-player-controls" role="toolbar" aria-label="Video controls">
+                    
+                    <!-- Seekable Progress Bar -->
+                    <div class="player-timeline-wrapper" id="timeline-container" role="slider" aria-label="Seek video position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                        <div class="timeline-buffered" id="timeline-buffered"></div>
+                        <div class="timeline-played" id="timeline-played"></div>
+                        <div class="timeline-thumb" id="timeline-thumb"></div>
+                    </div>
+
+                    <!-- Bottom Controls Row -->
+                    <div class="controls-bottom-row">
+                        <div class="controls-group-left">
+                            <button type="button" class="btn-control" id="btn-play-pause" aria-label="Play video">
+                                <span class="control-icon" id="icon-play-pause">▶</span>
+                            </button>
+                            <button type="button" class="btn-control" id="btn-seek-backward" aria-label="Seek backward 10 seconds">
+                                <span class="control-icon">↺ 10s</span>
+                            </button>
+                            <button type="button" class="btn-control" id="btn-seek-forward" aria-label="Seek forward 10 seconds">
+                                <span class="control-icon">↻ 10s</span>
+                            </button>
+
+                            <!-- Volume Control -->
+                            <div class="volume-control-group">
+                                <button type="button" class="btn-control" id="btn-mute" aria-label="Mute audio">
+                                    <span class="control-icon" id="icon-mute">🔊</span>
+                                </button>
+                                <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="1" aria-label="Volume slider">
+                            </div>
+
+                            <!-- Time Counter -->
+                            <div class="time-counter" id="time-counter" aria-live="off">
+                                <span id="current-time-text">00:00</span> / <span id="duration-time-text">00:00</span>
+                            </div>
+                        </div>
+
+                        <div class="controls-group-right">
+                            <span class="player-movie-watermark" id="player-movie-watermark">Streaming Demo</span>
+                            <button type="button" class="btn-control" id="btn-fullscreen" aria-label="Enter fullscreen">
+                                <span class="control-icon" id="icon-fullscreen">⛶</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Movie Metadata & Quick Actions -->
+        <section class="watch-metadata-section" aria-labelledby="watch-movie-title">
+            <div class="watch-meta-header">
+                <div>
+                    <h1 class="watch-movie-title" id="watch-movie-title">Loading movie...</h1>
+                    <div class="watch-meta-badges">
+                        <span class="meta-badge" id="watch-movie-year">2026</span>
+                        <span class="meta-badge rating-badge" id="watch-movie-rating">★ 8.5</span>
+                        <span class="meta-badge" id="watch-movie-runtime">1h 58m</span>
+                        <span class="meta-badge quality-badge">HD</span>
+                    </div>
+                </div>
+
+                <div class="watch-actions-bar">
+                    <button type="button" class="btn btn-watch-action" id="btn-watch-watchlist">
+                        <span id="watchlist-action-icon">+</span>
+                        <span id="watchlist-action-text">Add to My List</span>
+                    </button>
+                    <button type="button" class="btn btn-watch-secondary" id="btn-watch-trailer">
+                        ▶ Play Trailer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Genres & Synopsis -->
+            <div class="watch-genres-row" id="watch-genres-row">
+                <!-- Populated dynamically -->
+            </div>
+
+            <p class="watch-synopsis-text" id="watch-synopsis-text">
+                Loading movie synopsis and information...
+            </p>
+
+            <div class="watch-cast-wrapper" id="watch-cast-wrapper" style="display: none;">
+                <span class="cast-label">Starring:</span>
+                <span class="cast-names" id="watch-cast-names"></span>
+            </div>
+        </section>
+
+        <!-- More Like This Recommendations -->
+        <section class="watch-recommendations-section" aria-labelledby="heading-more-like-this">
+            <h2 class="section-title" id="heading-more-like-this">More Like This</h2>
+            <div class="recommendations-grid" id="watch-recommendations-grid">
+                <div class="panel-loading">Loading related movies...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Dedicated Trailer Modal (Reused from Task 19) -->
+    <div class="trailer-modal" id="trailer-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Official Movie Trailer">
+        <div class="trailer-modal-overlay" id="trailer-overlay"></div>
+        <div class="trailer-modal-content">
+            <button type="button" class="trailer-modal-close" id="trailer-modal-close" aria-label="Close trailer video">✕</button>
+            <div class="trailer-video-wrapper" id="trailer-video-wrapper">
+                <!-- Video iframe injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js" defer></script>
+
+    <!-- Application Configuration & Scripts -->
+    <script src="js/config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/watch.js" defer></script>
+</body>
+</html>

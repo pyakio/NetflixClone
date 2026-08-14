@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create Account — Netflix Clone. Register to unlock your personalized movie watchlist and seamless streaming experience.">
+    <title>Create Account — Netflix Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+
+    <!-- Auth Header / Logo -->
+    <header class="auth-header">
+        <a href="index.html" class="logo" aria-label="Netflix Clone Homepage">NETFLIX</a>
+    </header>
+
+    <!-- Main Auth Container -->
+    <main class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Create Account</h1>
+
+            <!-- Error Banner -->
+            <div id="auth-error" class="auth-error-banner" role="alert" aria-live="polite" style="display: none;"></div>
+
+            <!-- Registration Form -->
+            <form id="register-form" class="auth-form" novalidate>
+                <div class="form-group">
+                    <label for="register-name" class="form-label">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="register-name" 
+                        name="name" 
+                        class="form-input" 
+                        placeholder="John Doe" 
+                        autocomplete="name" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email" class="form-label">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="register-email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="name@example.com" 
+                        autocomplete="email" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password" class="form-label">Password (min. 6 characters)</label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="register-password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Create a password" 
+                            autocomplete="new-password" 
+                            required
+                        >
+                        <button 
+                            type="button" 
+                            class="password-toggle-btn" 
+                            id="toggle-register-password" 
+                            aria-label="Show password"
+                        >Show</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="register-confirm-password" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Confirm your password" 
+                        autocomplete="new-password" 
+                        required
+                    >
+                </div>
+
+                <button type="submit" id="register-submit" class="btn btn-auth-submit">
+                    <span class="btn-text">Create Account</span>
+                </button>
+            </form>
+
+            <!-- Auth Switch / Footer -->
+            <div class="auth-footer-text">
+                <p>Already have an account? <a href="login.html" class="auth-link">Sign in now.</a></p>
+                <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <!-- Project Auth Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('register-form');
+            const nameInput = document.getElementById('register-name');
+            const emailInput = document.getElementById('register-email');
+            const passwordInput = document.getElementById('register-password');
+            const confirmPasswordInput = document.getElementById('register-confirm-password');
+            const togglePasswordBtn = document.getElementById('toggle-register-password');
+            const submitBtn = document.getElementById('register-submit');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const errorBanner = document.getElementById('auth-error');
+
+            // Password show/hide toggle
+            if (togglePasswordBtn && passwordInput) {
+                togglePasswordBtn.addEventListener('click', () => {
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    togglePasswordBtn.textContent = isPassword ? 'Hide' : 'Show';
+                    togglePasswordBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+                });
+            }
+
+            // Display error
+            function showError(message) {
+                if (errorBanner) {
+                    errorBanner.textContent = message;
+                    errorBanner.style.display = 'block';
+                }
+            }
+
+            // Hide error
+            function hideError() {
+                if (errorBanner) {
+                    errorBanner.textContent = '';
+                    errorBanner.style.display = 'none';
+                }
+            }
+
+            // Set button loading state
+            function setLoading(isLoading) {
+                if (submitBtn) {
+                    submitBtn.disabled = isLoading;
+                    btnText.textContent = isLoading ? 'Creating Account...' : 'Create Account';
+                }
+            }
+
+            // If user is already logged in, redirect to homepage
+            AuthService.onAuthStateChange((user) => {
+                if (user) {
+                    window.location.href = 'index.html';
+                }
+            });
+
+            // Form Submit Handler
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    hideError();
+
+                    const name = nameInput.value.trim();
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value;
+                    const confirmPassword = confirmPasswordInput.value;
+
+                    // Client validation
+                    if (!name) {
+                        showError('Please enter your full name.');
+                        nameInput.focus();
+                        return;
+                    }
+
+                    if (!email) {
+                        showError('Please enter your email address.');
+                        emailInput.focus();
+                        return;
+                    }
+
+                    if (!AuthService.isValidEmail(email)) {
+                        showError('Please enter a valid email address.');
+                        emailInput.focus();
+                        return;
+                    }
+
+                    if (!AuthService.isValidPassword(password)) {
+                        showError('Password must be at least 6 characters long.');
+                        passwordInput.focus();
+                        return;
+                    }
+
+                    if (password !== confirmPassword) {
+                        showError('Passwords do not match.');
+                        confirmPasswordInput.focus();
+                        return;
+                    }
+
+                    setLoading(true);
+
+                    try {
+                        await AuthService.register(name, email, password, confirmPassword);
+                        // Redirect on successful registration
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                        const friendlyMsg = AuthService.getFriendlyErrorMessage(error);
+                        showError(friendlyMsg);
+                    } finally {
+                        setLoading(false);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

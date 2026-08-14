@@ -1,0 +1,21 @@
+# Local Configuration & Environment Secrets
+js/config.js
+js/firebase-config.js
+.env
+.env.local
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+*.service-account.json
+service-account*.json
+firebase-credentials*.json
+
+# Dependencies
+node_modules/
+backend/node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard & Analytics — Netflix Clone</title>
+    <meta name="description" content="Administrator dashboard for platform metrics, user management, and viewing analytics.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page-body">
+
+    <!-- Admin Header -->
+    <header class="navbar scrolled admin-navbar" role="banner">
+        <div class="nav-left">
+            <a href="index.html" class="logo" aria-label="Netflix Clone Home">NETFLIX</a>
+            <span class="admin-badge">ADMIN</span>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+            <nav class="nav-links" id="nav-links" role="navigation" aria-label="Admin Navigation">
+                <a href="admin.html" class="nav-link active" aria-current="page">Dashboard</a>
+                <a href="index.html" class="nav-link">Main App</a>
+                <a href="browse.html" class="nav-link">Browse</a>
+                <a href="settings.html" class="nav-link">Account</a>
+            </nav>
+        </div>
+        <div class="nav-actions">
+            <div id="nav-auth-container" class="nav-auth-group">
+                <!-- Populated with admin sign out -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+
+        <!-- Access Denied Guard -->
+        <div id="access-denied-view" class="profile-guard-card admin-guard-card" style="display: none;">
+            <div class="guard-icon" aria-hidden="true">🔒</div>
+            <h1 class="guard-title">Access Denied</h1>
+            <p class="guard-message" id="guard-message-text">Administrator privileges are required to access this dashboard.</p>
+            <a href="index.html" class="btn btn-auth-submit">Return to Home</a>
+        </div>
+
+        <!-- Authenticated Admin Dashboard -->
+        <div id="admin-dashboard-view" class="admin-dashboard-container" style="display: none;">
+            
+            <!-- Dashboard Header & Range Filter -->
+            <div class="admin-dashboard-header">
+                <div>
+                    <h1 class="admin-page-title">Platform Analytics & Dashboard</h1>
+                    <p class="admin-page-subtitle">Real-time aggregate data, user metrics, and platform viewing activity.</p>
+                </div>
+                <div class="date-filter-group" role="group" aria-label="Date Range Filter">
+                    <button type="button" class="btn-date-filter active" data-range="all">All Time</button>
+                    <button type="button" class="btn-date-filter" data-range="30d">Last 30 Days</button>
+                    <button type="button" class="btn-date-filter" data-range="7d">Last 7 Days</button>
+                </div>
+            </div>
+
+            <!-- Overview Metrics Grid -->
+            <section class="admin-metrics-grid" aria-label="Platform Overview Metrics">
+                <div class="metric-card">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-accounts">—</span>
+                        <span class="metric-label">Registered Accounts</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">👤</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-profiles">—</span>
+                        <span class="metric-label">Viewing Profiles</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🎬</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-unique-movies">—</span>
+                        <span class="metric-label">Unique Movies Watched</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">✅</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-completion-rate">—</span>
+                        <span class="metric-label">Completion Rate</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">⏱️</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-watch-time">—</span>
+                        <span class="metric-label">Tracked Playback Time</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">📋</div>
+                    <div class="metric-data">
+                        <span class="metric-value" id="metric-watchlist">—</span>
+                        <span class="metric-label">Saved to My List</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Two-Column Analytics Layout -->
+            <div class="admin-two-col-grid">
+                
+                <!-- Most Watched Movies -->
+                <section class="admin-panel" aria-labelledby="heading-popular-movies">
+                    <div class="panel-header">
+                        <h2 class="panel-title" id="heading-popular-movies">Most Watched Movies</h2>
+                        <span class="panel-badge">By Watch History</span>
+                    </div>
+                    <div class="popular-movies-container" id="popular-movies-container">
+                        <div class="panel-loading">Loading top movies...</div>
+                    </div>
+                </section>
+
+                <!-- Recent Platform Activity -->
+                <section class="admin-panel" aria-labelledby="heading-recent-activity">
+                    <div class="panel-header">
+                        <h2 class="panel-title" id="heading-recent-activity">Recent Activity Feed</h2>
+                        <span class="panel-badge">Live Events</span>
+                    </div>
+                    <div class="activity-feed-container" id="activity-feed-container">
+                        <div class="panel-loading">Loading recent events...</div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- User Management Section -->
+            <section class="admin-panel admin-users-section" aria-labelledby="heading-users">
+                <div class="panel-header user-panel-header">
+                    <div>
+                        <h2 class="panel-title" id="heading-users">User Accounts</h2>
+                        <p class="panel-subtitle">Manage registered accounts and inspect viewing profile distributions.</p>
+                    </div>
+                    <div class="user-search-wrapper">
+                        <input type="search" id="input-user-search" class="admin-search-input" placeholder="Search by email..." aria-label="Search users by email">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table" id="admin-users-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">User Email</th>
+                                <th scope="col">Profiles</th>
+                                <th scope="col">My List Items</th>
+                                <th scope="col">Account Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-tbody">
+                            <tr>
+                                <td colspan="4" class="table-loading">Loading user records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="admin-pagination-bar" id="admin-pagination-bar">
+                    <button type="button" class="btn-pagination" id="btn-page-prev" disabled>← Previous</button>
+                    <span class="pagination-info" id="pagination-info">Page 1</span>
+                    <button type="button" class="btn-pagination" id="btn-page-next" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 Task 35: Content Management & Homepage Curation Section
+                 ============================================================ -->
+            <section class="admin-panel admin-content-section" aria-labelledby="heading-content-mgmt">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title" id="heading-content-mgmt">Content Management & Homepage Curation</h2>
+                        <p class="panel-subtitle">Manage featured hero content, homepage section order, visibility, and curated collections.</p>
+                    </div>
+                </div>
+
+                <!-- Content Management Grid -->
+                <div class="admin-content-grid">
+                    
+                    <!-- 1. Featured Hero Configuration -->
+                    <div class="content-mgmt-card">
+                        <h3 class="content-card-title">Featured Hero Movie</h3>
+                        <p class="content-card-subtitle">Set the primary headline movie featured on the homepage hero banner.</p>
+                        
+                        <form id="form-featured-movie" class="admin-form">
+                            <div class="form-group">
+                                <label for="input-featured-id" class="form-label">TMDB Movie ID</label>
+                                <input type="number" id="input-featured-id" class="form-input" placeholder="e.g. 102" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-featured-title" class="form-label">Title</label>
+                                <input type="text" id="input-featured-title" class="form-input" placeholder="e.g. Inception" required maxlength="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-featured-overview" class="form-label">Overview / Synopsis</label>
+                                <textarea id="input-featured-overview" class="form-input" rows="2" placeholder="Movie synopsis..." maxlength="500"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-auth-submit" id="btn-save-featured">Save Featured Movie</button>
+                        </form>
+                    </div>
+
+                    <!-- 2. Curated Collection Builder -->
+                    <div class="content-mgmt-card">
+                        <h3 class="content-card-title">Create Curated Collection</h3>
+                        <p class="content-card-subtitle">Group hand-picked movies into a themed collection for discovery.</p>
+                        
+                        <form id="form-curated-collection" class="admin-form">
+                            <div class="form-group">
+                                <label for="input-collection-title" class="form-label">Collection Name</label>
+                                <input type="text" id="input-collection-title" class="form-input" placeholder="e.g. Best Sci-Fi Masterpieces" required maxlength="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-collection-desc" class="form-label">Description</label>
+                                <input type="text" id="input-collection-desc" class="form-input" placeholder="e.g. Mind-bending science fiction journeys" maxlength="300">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-collection-movies" class="form-label">Movie IDs (comma-separated)</label>
+                                <input type="text" id="input-collection-movies" class="form-input" placeholder="e.g. 101, 102, 103, 107">
+                            </div>
+                            <button type="submit" class="btn btn-auth-submit" id="btn-create-collection">Create Collection</button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Existing Collections List -->
+                <div class="collections-list-wrapper">
+                    <h3 class="content-subheading">Active Curated Collections</h3>
+                    <div class="collections-grid" id="admin-collections-container">
+                        <div class="panel-loading">Loading collections...</div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Admin Audit Logs -->
+            <section class="admin-panel admin-audit-section" aria-labelledby="heading-audit-logs">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title" id="heading-audit-logs">Admin Mutation Audit Trail</h2>
+                        <p class="panel-subtitle">Append-only log of content updates and administrative actions.</p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table" id="admin-audit-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Timestamp</th>
+                                <th scope="col">Admin User</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">Target Resource</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-audit-tbody">
+                            <tr>
+                                <td colspan="4" class="table-loading">Loading audit logs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js" defer></script>
+
+    <!-- Application Scripts -->
+    <script src="js/config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/admin.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Account Profile — Netflix Clone. Manage your account details, display name, and saved watchlist.">
+    <title>Account Profile — Netflix Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="profile-body">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="logo" aria-label="Netflix Homepage">NETFLIX</a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link">Browse Movies</a>
+                <a href="index.html#my-list-section" class="nav-link">My List</a>
+                <a href="activity.html" class="nav-link">Activity</a>
+                <a href="settings.html" class="nav-link active">Account</a>
+            </nav>
+        </div>
+        <div class="nav-actions">
+            <button type="button" class="btn-nav-logout" id="nav-header-logout-btn">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- Main Profile Container -->
+    <main class="profile-main">
+        <!-- Unauthenticated Access Guard -->
+        <div id="unauth-view" class="profile-guard-card" style="display: none;">
+            <div class="guard-icon" aria-hidden="true">🔒</div>
+            <h1 class="guard-title">Sign In Required</h1>
+            <p class="guard-message">Please sign in to view and manage your Netflix account profile.</p>
+            <a href="login.html" class="btn btn-auth-submit">Sign In to Continue</a>
+            <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
+        </div>
+
+        <!-- Authenticated Profile Card -->
+        <div id="auth-view" class="profile-card" style="display: none;">
+            
+            <!-- Avatar Banner -->
+            <div class="profile-header-banner">
+                <div class="profile-avatar" id="avatar-icon" aria-hidden="true">👤</div>
+                <div class="profile-header-text">
+                    <h1 class="profile-heading" id="profile-heading-name">Account</h1>
+                    <span class="profile-member-badge" id="profile-member-since">Member</span>
+                </div>
+            </div>
+
+            <!-- Feedback Banners -->
+            <div id="profile-error" class="auth-error-banner" role="alert" aria-live="polite" style="display: none;"></div>
+            <div id="profile-success" class="profile-success-banner" role="status" aria-live="polite" style="display: none;"></div>
+
+            <!-- Profile Form -->
+            <form id="profile-form" class="profile-form" novalidate>
+                
+                <div class="form-group">
+                    <label for="profile-name" class="form-label">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="profile-name" 
+                        name="displayName" 
+                        class="form-input" 
+                        placeholder="Your name" 
+                        autocomplete="name" 
+                        minlength="2" 
+                        maxlength="50" 
+                        required
+                    >
+                    <span class="form-hint">Must be between 2 and 50 characters long.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-email" class="form-label">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="profile-email" 
+                        name="email" 
+                        class="form-input form-input-readonly" 
+                        readonly 
+                        aria-readonly="true"
+                    >
+                    <span class="form-hint">Email is managed by your authentication provider.</span>
+                </div>
+
+                <!-- Account Stats Grid -->
+                <div class="profile-stats-grid">
+                    <div class="profile-stat-box">
+                        <span class="stat-label">My List</span>
+                        <a href="index.html#my-list-section" class="stat-value stat-link" id="profile-watchlist-count">0 Movies</a>
+                    </div>
+                    <div class="profile-stat-box">
+                        <span class="stat-label">Membership</span>
+                        <span class="stat-value" id="profile-created-date">—</span>
+                    </div>
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="profile-actions-row">
+                    <button type="submit" id="profile-save-btn" class="btn-profile-save">
+                        <span class="btn-text">Save Changes</span>
+                    </button>
+                    <button type="button" id="profile-logout-btn" class="btn-profile-logout">Sign Out</button>
+                </div>
+            </form>
+
+            <div class="profile-footer-links">
+                <a href="index.html" class="auth-link-secondary">← Back to Browse</a>
+            </div>
+        </div>
+
+        <!-- Initial Loading State -->
+        <div id="profile-loading" class="profile-loading-state">
+            <div class="section-loading">Loading your account...</div>
+        </div>
+    </main>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <!-- Application Configuration & Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingView = document.getElementById('profile-loading');
+            const authView = document.getElementById('auth-view');
+            const unauthView = document.getElementById('unauth-view');
+
+            const headingName = document.getElementById('profile-heading-name');
+            const memberSinceBadge = document.getElementById('profile-member-since');
+            const nameInput = document.getElementById('profile-name');
+            const emailInput = document.getElementById('profile-email');
+            const watchlistCountEl = document.getElementById('profile-watchlist-count');
+            const createdDateEl = document.getElementById('profile-created-date');
+
+            const profileForm = document.getElementById('profile-form');
+            const saveBtn = document.getElementById('profile-save-btn');
+            const saveBtnText = saveBtn ? saveBtn.querySelector('.btn-text') : null;
+            const logoutBtn = document.getElementById('profile-logout-btn');
+            const navHeaderLogoutBtn = document.getElementById('nav-header-logout-btn');
+
+            const errorBanner = document.getElementById('profile-error');
+            const successBanner = document.getElementById('profile-success');
+
+            function showError(msg) {
+                if (errorBanner) {
+                    errorBanner.textContent = msg;
+                    errorBanner.style.display = 'block';
+                }
+                if (successBanner) successBanner.style.display = 'none';
+            }
+
+            function showSuccess(msg) {
+                if (successBanner) {
+                    successBanner.textContent = msg;
+                    successBanner.style.display = 'block';
+                }
+                if (errorBanner) errorBanner.style.display = 'none';
+            }
+
+            function clearBanners() {
+                if (errorBanner) errorBanner.style.display = 'none';
+                if (successBanner) successBanner.style.display = 'none';
+            }
+
+            function formatDate(dateString) {
+                if (!dateString) return 'Member';
+                try {
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return 'Member';
+                    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                    return `${months[date.getMonth()]} ${date.getFullYear()}`;
+                } catch (e) {
+                    return 'Member';
+                }
+            }
+
+            async function fetchBackendUserProfile(token) {
+                const baseUrl = (typeof BACKEND_API_BASE_URL !== 'undefined')
+                    ? BACKEND_API_BASE_URL
+                    : 'http://localhost:5000/api';
+
+                const res = await fetch(`${baseUrl}/users/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                return data.user;
+            }
+
+            // Auth state subscription
+            AuthService.onAuthStateChange(async (user) => {
+                loadingView.style.display = 'none';
+
+                if (!user) {
+                    // Unauthenticated state
+                    unauthView.style.display = 'block';
+                    authView.style.display = 'none';
+                    if (navHeaderLogoutBtn) navHeaderLogoutBtn.style.display = 'none';
+                    return;
+                }
+
+                // Authenticated state
+                unauthView.style.display = 'none';
+                authView.style.display = 'block';
+                if (navHeaderLogoutBtn) navHeaderLogoutBtn.style.display = 'inline-flex';
+
+                const currentDisplayName = user.displayName || user.email.split('@')[0] || 'User';
+                nameInput.value = currentDisplayName;
+                emailInput.value = user.email || '';
+                headingName.textContent = currentDisplayName;
+
+                // Load backend metadata (creation date, watchlist count)
+                try {
+                    const token = await AuthService.getIdToken();
+                    if (token) {
+                        const backendUser = await fetchBackendUserProfile(token);
+                        if (backendUser) {
+                            const formattedDate = formatDate(backendUser.createdAt);
+                            memberSinceBadge.textContent = `Member since ${formattedDate}`;
+                            createdDateEl.textContent = formattedDate;
+                            const count = typeof backendUser.watchlistCount === 'number' ? backendUser.watchlistCount : 0;
+                            watchlistCountEl.textContent = `${count} ${count === 1 ? 'Movie' : 'Movies'}`;
+                        }
+                    }
+                } catch (err) {
+                    // Fallback to local / Firebase estimates
+                    const fallbackDate = formatDate(user.metadata ? user.metadata.creationTime : null);
+                    memberSinceBadge.textContent = `Member since ${fallbackDate}`;
+                    createdDateEl.textContent = fallbackDate;
+                    
+                    const localList = JSON.parse(localStorage.getItem(`netflix_clone_watchlist_${user.uid}`) || '[]');
+                    const count = localList.length;
+                    watchlistCountEl.textContent = `${count} ${count === 1 ? 'Movie' : 'Movies'}`;
+                }
+            });
+
+            // Handle Save Changes
+            if (profileForm) {
+                profileForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    clearBanners();
+
+                    const newName = nameInput.value.trim();
+
+                    if (!newName) {
+                        showError('Please enter your full name.');
+                        nameInput.focus();
+                        return;
+                    }
+
+                    if (newName.length < 2 || newName.length > 50) {
+                        showError('Name must be between 2 and 50 characters long.');
+                        nameInput.focus();
+                        return;
+                    }
+
+                    if (saveBtn) saveBtn.disabled = true;
+                    if (saveBtnText) saveBtnText.textContent = 'Saving...';
+
+                    try {
+                        const updated = await AuthService.updateProfileDisplayName(newName);
+                        headingName.textContent = updated.displayName;
+                        nameInput.value = updated.displayName;
+                        showSuccess('Profile updated successfully.');
+                    } catch (error) {
+                        showError(error.message || 'Unable to update profile.');
+                    } finally {
+                        if (saveBtn) saveBtn.disabled = false;
+                        if (saveBtnText) saveBtnText.textContent = 'Save Changes';
+                    }
+                });
+            }
+
+            // Handle Logout
+            async function handleLogout() {
+                try {
+                    await AuthService.logout();
+                    window.location.href = 'index.html';
+                } catch (err) {
+                    console.error('Logout error:', err.message);
+                }
+            }
+
+            if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+            if (navHeaderLogoutBtn) navHeaderLogoutBtn.addEventListener('click', handleLogout);
+        });
+    </script>
+</body>
+</html>

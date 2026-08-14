@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Viewing Insights & Activity — Netflix Clone. Understand your personal viewing statistics, watch time, and activity history.">
+    <title>Viewing Insights & Activity — Netflix Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="activity-body">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="logo" aria-label="Netflix Homepage">NETFLIX</a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link">Browse Movies</a>
+                <a href="index.html#my-list-section" class="nav-link">My List</a>
+                <a href="activity.html" class="nav-link active">Activity</a>
+                <a href="settings.html" class="nav-link">Account</a>
+            </nav>
+        </div>
+        <div class="nav-actions" id="nav-auth-container">
+            <button type="button" class="btn-nav-logout" id="nav-header-logout-btn">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="activity-main">
+
+        <!-- Unauthenticated Access Guard -->
+        <div id="unauth-view" class="profile-guard-card" style="display: none;">
+            <div class="guard-icon" aria-hidden="true">🔒</div>
+            <h1 class="guard-title">Sign In Required</h1>
+            <p class="guard-message">Please sign in to view your viewing activity and personal insights.</p>
+            <a href="login.html" class="btn btn-auth-submit">Sign In to Continue</a>
+            <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Home</a></p>
+        </div>
+
+        <!-- Authenticated Activity Dashboard -->
+        <div id="auth-view" class="activity-container" style="display: none;">
+            
+            <!-- Activity Header -->
+            <section class="activity-header">
+                <div class="activity-header-left">
+                    <h1 class="activity-title">Viewing Insights</h1>
+                    <p class="activity-subtitle">Personal viewing statistics and activity history for your active profile.</p>
+                </div>
+
+                <!-- Time Period Filter Tabs -->
+                <div class="activity-period-tabs" id="activity-period-tabs" role="tablist" aria-label="Insights Time Period">
+                    <button type="button" class="period-tab" data-period="7d" role="tab" aria-selected="false">Last 7 Days</button>
+                    <button type="button" class="period-tab active" data-period="30d" role="tab" aria-selected="true">Last 30 Days</button>
+                    <button type="button" class="period-tab" data-period="all" role="tab" aria-selected="false">All Time</button>
+                </div>
+            </section>
+
+            <!-- Loading & Error Status States -->
+            <div id="activity-status" class="activity-status-banner" style="display: none;"></div>
+
+            <!-- Dashboard Content Container -->
+            <div id="activity-content">
+                
+                <!-- Rule-Based Personal Insight Banner -->
+                <div class="activity-insight-banner" id="activity-insight-banner">
+                    <span class="insight-icon" aria-hidden="true">💡</span>
+                    <span class="insight-text" id="insight-text">Analyzing your viewing activity...</span>
+                </div>
+
+                <!-- Statistics Cards Grid -->
+                <section class="activity-stats-grid" aria-label="Viewing Summary Statistics">
+                    <div class="activity-stat-card">
+                        <span class="stat-icon" aria-hidden="true">🎬</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-movies-watched">0</span>
+                            <span class="stat-label">Movies Watched</span>
+                        </div>
+                    </div>
+                    <div class="activity-stat-card">
+                        <span class="stat-icon" aria-hidden="true">✅</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-completed">0</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                    <div class="activity-stat-card">
+                        <span class="stat-icon" aria-hidden="true">⏳</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-in-progress">0</span>
+                            <span class="stat-label">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="activity-stat-card">
+                        <span class="stat-icon" aria-hidden="true">⏱️</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-watch-time">0m</span>
+                            <span class="stat-label">Tracked Watch Time</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recently Watched Movies Section -->
+                <section class="activity-section" id="activity-recent-section">
+                    <h2 class="activity-section-title">Recently Watched</h2>
+                    <div class="movie-row" id="activity-recent-row"></div>
+                </section>
+
+                <!-- Activity Timeline Section -->
+                <section class="activity-section" id="activity-timeline-section">
+                    <h2 class="activity-section-title">Activity Timeline</h2>
+                    <ol class="activity-timeline-list" id="activity-timeline-list" aria-label="Timeline of watched movies">
+                        <!-- Populated by JS -->
+                    </ol>
+                </section>
+
+            </div>
+
+            <!-- Empty State -->
+            <div id="activity-empty-state" class="activity-empty-state" style="display: none;">
+                <div class="empty-icon" aria-hidden="true">🍿</div>
+                <h2 class="empty-title">You haven't watched anything yet</h2>
+                <p class="empty-text">Start watching movies and shows to build your personal viewing insights and activity history.</p>
+                <a href="browse.html" class="btn btn-auth-submit">Browse Movies</a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-copyright">&copy; 2026 Netflix Clone — Educational Project</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/activity.js"></script>
+</body>
+</html>

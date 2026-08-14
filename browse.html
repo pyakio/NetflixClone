@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse and discover movies by genre, rating, release year, and popularity on Netflix Clone.">
+    <title>Browse Movies — Netflix Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="browse-body">
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-left">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+            <a href="index.html" class="logo" aria-label="Netflix Homepage">NETFLIX</a>
+
+            <nav class="main-nav" aria-label="Main Navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link active" aria-current="page">Browse Movies</a>
+                <a href="index.html#my-list-section" class="nav-link" id="nav-my-list">My List</a>
+                <a href="notifications.html" class="nav-link">Activity</a>
+                <a href="settings.html" class="nav-link">Account</a>
+            </nav>
+        </div>
+
+        <div class="nav-actions">
+            <div id="nav-auth-container" class="nav-auth-group">
+                <a href="login.html" class="btn-nav-signin" id="nav-signin-btn">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="browse-main">
+        
+        <!-- Browse Header -->
+        <section class="browse-header">
+            <div class="browse-header-content">
+                <h1 class="browse-title" id="browse-page-title">Browse Movies</h1>
+                <p class="browse-subtitle" id="browse-page-subtitle">Explore movies by genre, release year, minimum rating, and sorting criteria.</p>
+            </div>
+
+            <!-- Mobile Filter Toggle Button -->
+            <button type="button" class="btn-filter-toggle" id="filter-toggle-btn" aria-expanded="false" aria-controls="filter-panel">
+                <span class="filter-icon" aria-hidden="true">⚙️</span>
+                <span class="filter-toggle-text">Filters & Sort</span>
+            </button>
+        </section>
+
+        <!-- Genre Directory Quick-Bar (Task 32) -->
+        <section class="genre-directory-section" aria-label="Genre Quick Selector">
+            <div class="genre-directory-pills" id="genre-directory-pills" role="tablist"></div>
+        </section>
+
+        <!-- Filter & Sort Panel -->
+        <section class="filter-panel" id="filter-panel" aria-label="Movie Filters">
+            <form id="filter-form" class="filter-form">
+                <div class="filter-grid">
+                    
+                    <!-- Search Query Input -->
+                    <div class="filter-group filter-group-search">
+                        <label for="browse-search-input" class="filter-label">Search Movies</label>
+                        <div class="browse-search-wrapper">
+                            <input type="search" id="browse-search-input" name="q" class="filter-input" placeholder="Search by title..." autocomplete="off">
+                            <button type="button" class="btn-input-clear" id="browse-search-clear" aria-label="Clear search query" style="display: none;">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Genre Filter -->
+                    <div class="filter-group">
+                        <label for="genre-filter" class="filter-label">Genre</label>
+                        <select id="genre-filter" name="genre" class="filter-select">
+                            <option value="">All Genres</option>
+                            <!-- Dynamically populated -->
+                        </select>
+                    </div>
+
+                    <!-- Release Year Filter -->
+                    <div class="filter-group">
+                        <label for="year-filter" class="filter-label">Release Year</label>
+                        <select id="year-filter" name="year" class="filter-select">
+                            <option value="">All Years</option>
+                            <!-- Dynamically populated -->
+                        </select>
+                    </div>
+
+                    <!-- Minimum Rating Filter -->
+                    <div class="filter-group">
+                        <label for="rating-filter" class="filter-label">Minimum Rating</label>
+                        <select id="rating-filter" name="rating" class="filter-select">
+                            <option value="">All Ratings</option>
+                            <option value="7">⭐ 7+ Good</option>
+                            <option value="8">⭐ 8+ Excellent</option>
+                            <option value="9">⭐ 9+ Masterpiece</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort By -->
+                    <div class="filter-group">
+                        <label for="sort-filter" class="filter-label">Sort By</label>
+                        <select id="sort-filter" name="sort" class="filter-select">
+                            <option value="popularity.desc">Most Popular</option>
+                            <option value="vote_average.desc">Top Rated</option>
+                            <option value="primary_release_date.desc">Newest Release</option>
+                            <option value="primary_release_date.asc">Oldest Release</option>
+                            <option value="vote_count.desc">Most Voted</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Filter Actions -->
+                <div class="filter-actions">
+                    <button type="submit" class="btn-filter-apply" id="filter-apply-btn">Apply Filters</button>
+                    <button type="button" class="btn-filter-reset" id="filter-reset-btn">Reset Filters</button>
+                </div>
+            </form>
+
+            <!-- Active Filters Chip Row -->
+            <div class="active-filters-container" id="active-filters-container" style="display: none;">
+                <span class="active-filters-label">Active Filters:</span>
+                <div class="active-filters-row" id="active-filters-row"></div>
+            </div>
+        </section>
+
+        <!-- Movie Results Section -->
+        <section class="browse-results-section" aria-label="Browse Results">
+            
+            <!-- Status message container (Loading / Empty / Error) -->
+            <div id="browse-status" class="browse-status" aria-live="polite"></div>
+
+            <!-- Movies Grid -->
+            <div class="movies-grid" id="browse-movies-grid" aria-label="Movie search results"></div>
+
+            <!-- Load More Pagination -->
+            <div class="load-more-container" id="load-more-container" style="display: none;">
+                <button type="button" class="btn-load-more" id="load-more-btn">
+                    <span class="load-more-text">Load More Movies</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Movie Details Modal (Shared component) -->
+    <div class="movie-modal" id="movie-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="movie-modal-title">
+        <div class="movie-modal-overlay" id="modal-overlay"></div>
+        <div class="movie-modal-content">
+            <button type="button" class="movie-modal-close" id="movie-modal-close" aria-label="Close details modal">✕</button>
+
+            <div class="movie-modal-hero" id="modal-hero">
+                <img class="movie-modal-backdrop" id="modal-backdrop-img" alt="" loading="lazy">
+                <div class="movie-modal-hero-gradient"></div>
+                <div class="movie-modal-hero-content">
+                    <h2 class="movie-modal-title" id="movie-modal-title">Movie Title</h2>
+                    <div class="movie-modal-meta">
+                        <span class="movie-modal-rating" id="modal-rating">⭐ 0.0</span>
+                        <span class="movie-modal-date" id="modal-date">Year</span>
+                        <span class="movie-modal-runtime" id="modal-runtime">0 min</span>
+                    </div>
+                    <div class="movie-modal-buttons">
+                        <button type="button" class="movie-modal-trailer-btn" id="modal-trailer-btn">
+                            <span class="trailer-btn-icon" aria-hidden="true">▶</span>
+                            <span class="trailer-btn-text"> Watch Trailer</span>
+                        </button>
+                        <button type="button" class="btn btn-play" id="modal-watch-btn">▶ Watch Now</button>
+                        <button type="button" class="btn btn-watchlist" id="modal-watchlist-btn" aria-pressed="false">
+                            <span class="watchlist-btn-icon" aria-hidden="true">+</span>
+                            <span class="watchlist-btn-text"> My List</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-modal-body" id="modal-body">
+                <div class="movie-modal-poster-col">
+                    <img class="movie-modal-poster" id="modal-poster-img" alt="" loading="lazy">
+                </div>
+                <div class="movie-modal-info-col">
+                    <div class="movie-modal-genres" id="modal-genres">Genres</div>
+                    <p class="movie-modal-overview" id="modal-overview">Overview text goes here.</p>
+
+                    <!-- Cast Section (Task 19) -->
+                    <div class="modal-section" id="modal-cast-section" style="display: none;">
+                        <h3 class="modal-section-heading">Cast</h3>
+                        <div class="cast-grid" id="modal-cast-grid"></div>
+                    </div>
+
+                    <!-- Similar Movies Section (Task 19) -->
+                    <div class="modal-section" id="modal-similar-section" style="display: none;">
+                        <h3 class="modal-section-heading">More Like This</h3>
+                        <div class="similar-grid" id="modal-similar-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-modal-state" id="modal-state" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Dedicated Trailer Modal (Task 19) -->
+    <div class="trailer-modal" id="trailer-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Official Movie Trailer">
+        <div class="trailer-modal-overlay" id="trailer-overlay"></div>
+        <div class="trailer-modal-content">
+            <button type="button" class="trailer-modal-close" id="trailer-modal-close" aria-label="Close trailer video">✕</button>
+            <div class="trailer-video-wrapper" id="trailer-video-wrapper">
+                <!-- Video iframe injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-top">Questions? Call <a href="#">1-800-012-3456</a></p>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Movies</a></li>
+                <li><a href="index.html#my-list-section">My List</a></li>
+                <li><a href="profile.html">Account</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+            </ul>
+            <p class="footer-copyright">© 2026 Netflix Clone, Inc. All movie data provided by TMDB.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <!-- Application Configuration & Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/browse.js"></script>
+</body>
+</html>
