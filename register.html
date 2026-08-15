@@ -6,6 +6,9 @@
     <meta name="description" content="Create Account — Netflix Clone. Register to unlock your personalized movie watchlist and seamless streaming experience.">
     <title>Create Account — Netflix Clone</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="auth-body">
 
@@ -87,11 +90,18 @@
                 <button type="submit" id="register-submit" class="btn btn-auth-submit">
                     <span class="btn-text">Create Account</span>
                 </button>
+
+                <p class="auth-terms-note">
+                    By signing up, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                </p>
             </form>
 
             <!-- Auth Switch / Footer -->
             <div class="auth-footer-text">
                 <p>Already have an account? <a href="login.html" class="auth-link">Sign in now.</a></p>
+                <p class="auth-recaptcha-text">
+                    This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#" class="recaptcha-learn-more">Learn more.</a>
+                </p>
                 <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
             </div>
         </div>
@@ -208,8 +218,8 @@
 
                     try {
                         await AuthService.register(name, email, password, confirmPassword);
-                        // Redirect on successful registration
-                        window.location.href = 'index.html';
+                        // Redirect on successful registration to profile selector (Netflix UX)
+                        window.location.href = 'profiles.html';
                     } catch (error) {
                         const friendlyMsg = AuthService.getFriendlyErrorMessage(error);
                         showError(friendlyMsg);

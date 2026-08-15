@@ -33,20 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let profilesList          = [];
     let currentUserSession    = null;
 
-    // Avatar map to emoji/visual representations
+    // Avatar map to expressive character representations
     const AVATAR_MAP = {
-        'avatar-1': '🔴',
-        'avatar-2': '🔵',
-        'avatar-3': '🟢',
-        'avatar-4': '🟡',
-        'avatar-5': '🟣',
+        'avatar-1': '😊',
+        'avatar-2': '😎',
+        'avatar-3': '🍿',
+        'avatar-4': '🐱',
+        'avatar-5': '👑',
         'avatar-6': '🤖'
     };
 
     function getBackendUrl() {
         return (typeof BACKEND_API_BASE_URL !== 'undefined')
             ? BACKEND_API_BASE_URL
-            : 'http://localhost:5000/api';
+            : 'http://localhost:5001/api';
     }
 
 
@@ -158,11 +158,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createProfileCard(profile) {
+        // Determine if this card is the currently active profile
+        let activeProfileId = null;
+        try {
+            const stored = sessionStorage.getItem('netflix_active_profile');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                activeProfileId = parsed ? (parsed.id || parsed._id) : null;
+            }
+        } catch (e) {}
+
+        const thisProfileId = String(profile.id || profile._id || '');
+        const isActiveProfile = activeProfileId && String(activeProfileId) === thisProfileId;
+
         const card = document.createElement('div');
-        card.className = `profile-card-item ${isManageMode ? 'is-manage-mode' : ''}`;
+        card.className = `profile-card-item${isManageMode ? ' is-manage-mode' : ''}${isActiveProfile ? ' is-active-profile' : ''}`;
         card.setAttribute('tabindex', '0');
         card.setAttribute('role', 'button');
         card.setAttribute('aria-label', `${isManageMode ? 'Edit' : 'Select'} profile ${profile.name}`);
+        card.setAttribute('aria-pressed', isActiveProfile ? 'true' : 'false');
 
         const avatarBox = document.createElement('div');
         avatarBox.className = `profile-card-avatar ${profile.avatar || 'avatar-1'}`;

@@ -88,7 +88,10 @@ const addToWatchHistory = async (req, res, next) => {
             backdropPath: backdropPath ? String(backdropPath).trim() : null,
             progress: parsedProgress,
             duration: parsedDuration,
-            lastWatchedAt: new Date()
+            lastWatchedAt: new Date(),
+            status: (parsedDuration > 0 && parsedProgress / parsedDuration >= 0.9)
+                ? 'completed'
+                : (parsedProgress > 0 ? 'in-progress' : 'not-started')
         };
 
         const record = await WatchHistory.findOneAndUpdate(
@@ -142,6 +145,11 @@ const updateProgress = async (req, res, next) => {
 
         if (typeof progress === 'number' && progress >= 0) {
             updateFields.progress = progress;
+            // Recompute status based on updated progress/duration
+            const effectiveDuration = (typeof duration === 'number' && duration > 0) ? duration : 7200;
+            updateFields.status = (effectiveDuration > 0 && progress / effectiveDuration >= 0.9)
+                ? 'completed'
+                : (progress > 0 ? 'in-progress' : 'not-started');
         }
 
         const filter = {

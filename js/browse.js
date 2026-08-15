@@ -476,14 +476,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const h3 = document.createElement('h3');
         h3.textContent = titleText;
-
         movieInfoDiv.appendChild(h3);
 
         if (typeof vote === 'number' && vote > 0) {
+            const metaRow = document.createElement('div');
+            metaRow.className = 'card-meta-row';
+
+            const matchSpan = document.createElement('span');
+            matchSpan.className = 'card-match-badge';
+            const matchScore = Math.min(99, Math.max(75, Math.round(vote * 10) + 5));
+            matchSpan.textContent = `${matchScore}% Match`;
+
             const ratingSpan = document.createElement('span');
             ratingSpan.className = 'card-rating-badge';
-            ratingSpan.textContent = `⭐ ${vote.toFixed(1)}`;
-            movieInfoDiv.appendChild(ratingSpan);
+            ratingSpan.textContent = `★ ${vote.toFixed(1)}`;
+
+            metaRow.appendChild(matchSpan);
+            metaRow.appendChild(ratingSpan);
+            movieInfoDiv.appendChild(metaRow);
         }
 
         article.appendChild(img);
@@ -1138,7 +1148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function getBackendUrl() {
         return (typeof BACKEND_API_BASE_URL !== 'undefined')
             ? BACKEND_API_BASE_URL
-            : 'http://localhost:5000/api';
+            : 'http://localhost:5001/api';
     }
 
     function getActiveProfile() {

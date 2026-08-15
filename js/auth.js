@@ -242,7 +242,7 @@ const AuthService = (() => {
             const token = await auth.currentUser.getIdToken();
             const baseUrl = (typeof BACKEND_API_BASE_URL !== 'undefined')
                 ? BACKEND_API_BASE_URL
-                : 'http://localhost:5000/api';
+                : 'http://localhost:5001/api';
 
             const response = await fetch(`${baseUrl}/users/me`, {
                 method: 'PATCH',
@@ -354,7 +354,7 @@ const AuthService = (() => {
         try {
             const baseUrl = (typeof BACKEND_API_BASE_URL !== 'undefined')
                 ? BACKEND_API_BASE_URL
-                : 'http://localhost:5000/api';
+                : 'http://localhost:5001/api';
 
             const res = await fetch(`${baseUrl}/account`, {
                 method: 'DELETE',

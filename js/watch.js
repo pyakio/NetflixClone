@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function getBackendUrl() {
         return (typeof BACKEND_API_BASE_URL !== 'undefined')
             ? BACKEND_API_BASE_URL
-            : 'http://localhost:5000/api';
+            : 'http://localhost:5001/api';
     }
 
     function getActiveProfile() {

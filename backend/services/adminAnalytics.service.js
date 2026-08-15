@@ -2,10 +2,12 @@
 // Admin Analytics Service — Task 36: Advanced Platform Analytics & BI
 // ==========================================================================
 
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const { Profile } = require('../models/Profile');
 const WatchHistory = require('../models/WatchHistory');
 const { Notification } = require('../models/Notification');
+
 
 /**
  * Get aggregate platform metrics & business intelligence
@@ -22,7 +24,7 @@ async function getPlatformStats(startDate = null) {
     let totalWatchlistItems = 0;
     let watchHistoryRecords = [];
 
-    if (User.db && User.db.readyState === 1) {
+    if (mongoose.connection.readyState === 1) {
         const [
             accCount,
             profCount,
@@ -95,7 +97,7 @@ async function getPlatformStats(startDate = null) {
  * @returns {Promise<Array>}
  */
 async function getPopularMovies(limit = 5, startDate = null) {
-    if (!WatchHistory.db || WatchHistory.db.readyState !== 1) {
+    if (mongoose.connection.readyState !== 1) {
         return [];
     }
 
@@ -153,7 +155,7 @@ async function getPopularMovies(limit = 5, startDate = null) {
  * @returns {Promise<Array>}
  */
 async function getRecentActivity(limit = 10) {
-    if (!Notification.db || Notification.db.readyState !== 1) {
+    if (mongoose.connection.readyState !== 1) {
         return [];
     }
 
@@ -179,7 +181,7 @@ async function getRecentActivity(limit = 10) {
  * @returns {Promise<Object>}
  */
 async function getUsersList(search = '', page = 1, limit = 20) {
-    if (!User.db || User.db.readyState !== 1) {
+    if (mongoose.connection.readyState !== 1) {
         return { users: [], pagination: { total: 0, page: 1, limit, pages: 1 } };
     }
 

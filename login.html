@@ -6,6 +6,9 @@
     <meta name="description" content="Sign In — Netflix Clone. Access your personalized movie streaming experience and saved watchlist.">
     <title>Sign In — Netflix Clone</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="auth-body">
 
@@ -25,7 +28,7 @@
             <!-- Login Form -->
             <form id="login-form" class="auth-form" novalidate>
                 <div class="form-group">
-                    <label for="login-email" class="form-label">Email Address</label>
+                    <label for="login-email" class="form-label">Email or mobile number</label>
                     <input 
                         type="email" 
                         id="login-email" 
@@ -61,11 +64,32 @@
                 <button type="submit" id="login-submit" class="btn btn-auth-submit">
                     <span class="btn-text">Sign In</span>
                 </button>
+
+                <div class="auth-help-row">
+                    <label class="remember-me-label">
+                        <input type="checkbox" id="remember-me" checked>
+                        <span class="remember-me-custom"></span>
+                        <span class="remember-me-text">Remember me</span>
+                    </label>
+                    <a href="#" class="auth-help-link" id="help-link">Need help?</a>
+                </div>
+
+                <!-- Quick Demo Login Option -->
+                <div class="auth-divider">
+                    <span class="divider-text">OR</span>
+                </div>
+
+                <button type="button" id="btn-demo-login" class="btn btn-auth-demo">
+                    ⚡ Use Demo Credentials
+                </button>
             </form>
 
             <!-- Auth Switch / Footer -->
             <div class="auth-footer-text">
                 <p>New to Netflix? <a href="register.html" class="auth-link">Sign up now.</a></p>
+                <p class="auth-recaptcha-text">
+                    This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#" class="recaptcha-learn-more">Learn more.</a>
+                </p>
                 <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
             </div>
         </div>
@@ -130,9 +154,22 @@
             // If user is already logged in, redirect to homepage
             AuthService.onAuthStateChange((user) => {
                 if (user) {
-                    window.location.href = 'index.html';
+                    window.location.href = 'profiles.html';
                 }
             });
+
+            // Quick Demo Credentials filler
+            const demoBtn = document.getElementById('btn-demo-login');
+            if (demoBtn) {
+                demoBtn.addEventListener('click', () => {
+                    emailInput.value = 'demo@netflix.com';
+                    passwordInput.value = 'netflix123';
+                    if (typeof showToast === 'function') {
+                        showToast('Filled demo credentials! Click Sign In to proceed.');
+                    }
+                    submitBtn.focus();
+                });
+            }
 
             // Form Submit Handler
             if (form) {
@@ -166,8 +203,8 @@
 
                     try {
                         await AuthService.login(email, password);
-                        // Redirect on successful sign in
-                        window.location.href = 'index.html';
+                        // Redirect to profile selector on successful sign in (Netflix UX)
+                        window.location.href = 'profiles.html';
                     } catch (error) {
                         const friendlyMsg = AuthService.getFriendlyErrorMessage(error);
                         showError(friendlyMsg);

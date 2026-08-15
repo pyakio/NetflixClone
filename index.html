@@ -6,6 +6,9 @@
     <meta name="description" content="Netflix Clone — A Netflix-inspired movie streaming platform built with HTML, CSS, and Vanilla JavaScript. Browse trending, popular, and action movies powered by the TMDB API.">
     <title>Netflix Clone — Stream Movies & TV Shows</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -44,49 +47,66 @@
         <!-- Hero Section -->
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero-content">
+                <div class="hero-series-badge">
+                    <span class="netflix-n-badge">N</span>
+                    <span class="series-badge-text">SERIES</span>
+                </div>
                 <h1 id="hero-title">Stranger Things</h1>
                 <div class="hero-meta">
+                    <span class="match-score">98% Match</span>
                     <span class="release-year">2026</span>
                     <span class="age-rating">16+</span>
                     <span class="duration">5 Seasons</span>
+                    <span class="quality-badge">Ultra HD 4K</span>
                 </div>
                 <p class="hero-description">
-                    When a young boy disappears, his friends and family uncover a mysterious supernatural world.
+                    When a young boy disappears, his friends and family uncover a mysterious supernatural world and secret government experiments.
                 </p>
                 <div class="hero-buttons">
-                    <button type="button" class="btn btn-play">▶ Play</button>
-                    <button type="button" class="btn btn-info">ⓘ More Info</button>
+                    <button type="button" class="btn btn-play"><span class="btn-icon">▶</span> Play</button>
+                    <button type="button" class="btn btn-info"><span class="btn-icon">ⓘ</span> More Info</button>
                 </div>
             </div>
         </section>
 
         <!-- Continue Watching Section (Task 16) -->
         <section class="movie-section continue-watching-section" id="continue-watching-section" aria-labelledby="continue-watching-title" style="display: none;">
-            <h2 id="continue-watching-title" class="section-title">Continue Watching</h2>
+            <div class="section-header-wrap">
+                <h2 id="continue-watching-title" class="section-title">Continue Watching</h2>
+            </div>
             <div class="movie-row" id="continue-watching-row"></div>
         </section>
 
         <!-- Because You Watched Section (Task 18) -->
         <section class="movie-section" id="because-you-watched-section" aria-labelledby="because-you-watched-title" style="display: none;">
-            <h2 id="because-you-watched-title" class="section-title">Because You Watched</h2>
+            <div class="section-header-wrap">
+                <h2 id="because-you-watched-title" class="section-title">Because You Watched</h2>
+            </div>
             <div class="movie-row" id="because-you-watched-row"></div>
         </section>
 
         <!-- My List Picks Section (Task 18) -->
         <section class="movie-section" id="my-list-picks-section" aria-labelledby="my-list-picks-title" style="display: none;">
-            <h2 id="my-list-picks-title" class="section-title">Recommended From Your Favorites</h2>
+            <div class="section-header-wrap">
+                <h2 id="my-list-picks-title" class="section-title">Recommended From Your Favorites</h2>
+            </div>
             <div class="movie-row" id="my-list-picks-row"></div>
         </section>
 
         <!-- For You Section (Task 18) -->
         <section class="movie-section" id="for-you-section" aria-labelledby="for-you-title" style="display: none;">
-            <h2 id="for-you-title" class="section-title">Top Picks For You</h2>
+            <div class="section-header-wrap">
+                <h2 id="for-you-title" class="section-title">Top Picks For You</h2>
+            </div>
             <div class="movie-row" id="for-you-row"></div>
         </section>
 
         <!-- Trending Movies Section -->
         <section class="movie-section" aria-labelledby="trending-title">
-            <h2 id="trending-title" class="section-title">Trending Now</h2>
+            <div class="section-header-wrap">
+                <h2 id="trending-title" class="section-title">Trending Now</h2>
+                <a href="browse.html?sort=trending" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
+            </div>
             <div class="movie-row" id="trending-row">
                 <div class="section-loading">Loading movies...</div>
             </div>
@@ -94,7 +114,10 @@
 
         <!-- Popular Movies Section -->
         <section class="movie-section" aria-labelledby="popular-title">
-            <h2 id="popular-title" class="section-title">Popular on Netflix</h2>
+            <div class="section-header-wrap">
+                <h2 id="popular-title" class="section-title">Popular on Netflix</h2>
+                <a href="browse.html?sort=popular" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
+            </div>
             <div class="movie-row" id="popular-row">
                 <div class="section-loading">Loading movies...</div>
             </div>
@@ -102,7 +125,10 @@
 
         <!-- Action Movies Section -->
         <section class="movie-section" aria-labelledby="action-title">
-            <h2 id="action-title" class="section-title">Action Movies</h2>
+            <div class="section-header-wrap">
+                <h2 id="action-title" class="section-title">Action Thrillers</h2>
+                <a href="browse.html?genre=28" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
+            </div>
             <div class="movie-row" id="action-row">
                 <div class="section-loading">Loading movies...</div>
             </div>
@@ -110,17 +136,20 @@
 
         <!-- Categories / Genre Directory Section (Task 32) -->
         <section class="movie-section categories-section" aria-labelledby="categories-title">
-            <h2 id="categories-title" class="section-title">Browse by Category</h2>
+            <div class="section-header-wrap">
+                <h2 id="categories-title" class="section-title">Browse by Category</h2>
+                <a href="browse.html" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
+            </div>
             <div class="genre-cards-grid" id="genre-cards-grid">
-                <a href="browse.html?genre=28" class="genre-card"><span class="genre-icon">💥</span><span class="genre-name">Action</span></a>
-                <a href="browse.html?genre=12" class="genre-card"><span class="genre-icon">🗺️</span><span class="genre-name">Adventure</span></a>
-                <a href="browse.html?genre=16" class="genre-card"><span class="genre-icon">🎨</span><span class="genre-name">Animation</span></a>
-                <a href="browse.html?genre=35" class="genre-card"><span class="genre-icon">😂</span><span class="genre-name">Comedy</span></a>
-                <a href="browse.html?genre=80" class="genre-card"><span class="genre-icon">🕵️</span><span class="genre-name">Crime</span></a>
-                <a href="browse.html?genre=18" class="genre-card"><span class="genre-icon">🎭</span><span class="genre-name">Drama</span></a>
-                <a href="browse.html?genre=27" class="genre-card"><span class="genre-icon">👻</span><span class="genre-name">Horror</span></a>
-                <a href="browse.html?genre=878" class="genre-card"><span class="genre-icon">🚀</span><span class="genre-name">Sci-Fi</span></a>
-                <a href="browse.html?genre=53" class="genre-card"><span class="genre-icon">⚡</span><span class="genre-name">Thriller</span></a>
+                <a href="browse.html?genre=28" class="genre-card genre-action"><span class="genre-icon">💥</span><span class="genre-name">Action</span></a>
+                <a href="browse.html?genre=12" class="genre-card genre-adventure"><span class="genre-icon">🗺️</span><span class="genre-name">Adventure</span></a>
+                <a href="browse.html?genre=16" class="genre-card genre-animation"><span class="genre-icon">🎨</span><span class="genre-name">Animation</span></a>
+                <a href="browse.html?genre=35" class="genre-card genre-comedy"><span class="genre-icon">😂</span><span class="genre-name">Comedy</span></a>
+                <a href="browse.html?genre=80" class="genre-card genre-crime"><span class="genre-icon">🕵️</span><span class="genre-name">Crime</span></a>
+                <a href="browse.html?genre=18" class="genre-card genre-drama"><span class="genre-icon">🎭</span><span class="genre-name">Drama</span></a>
+                <a href="browse.html?genre=27" class="genre-card genre-horror"><span class="genre-icon">👻</span><span class="genre-name">Horror</span></a>
+                <a href="browse.html?genre=878" class="genre-card genre-scifi"><span class="genre-icon">🚀</span><span class="genre-name">Sci-Fi</span></a>
+                <a href="browse.html?genre=53" class="genre-card genre-thriller"><span class="genre-icon">⚡</span><span class="genre-name">Thriller</span></a>
             </div>
         </section>
 

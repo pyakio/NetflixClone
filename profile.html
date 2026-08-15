@@ -6,6 +6,9 @@
     <meta name="description" content="Account Profile — Netflix Clone. Manage your account details, display name, and saved watchlist.">
     <title>Account Profile — Netflix Clone</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="profile-body">
 
@@ -187,7 +190,7 @@
             async function fetchBackendUserProfile(token) {
                 const baseUrl = (typeof BACKEND_API_BASE_URL !== 'undefined')
                     ? BACKEND_API_BASE_URL
-                    : 'http://localhost:5000/api';
+                    : 'http://localhost:5001/api';
 
                 const res = await fetch(`${baseUrl}/users/me`, {
                     headers: { 'Authorization': `Bearer ${token}` }

@@ -50,6 +50,11 @@ const watchHistorySchema = new mongoose.Schema(
         lastWatchedAt: {
             type: Date,
             default: Date.now
+        },
+        status: {
+            type: String,
+            enum: ['not-started', 'in-progress', 'completed'],
+            default: 'not-started'
         }
     },
     {

@@ -1,6 +1,4 @@
 # Local Configuration & Environment Secrets
-js/config.js
-js/firebase-config.js
 .env
 .env.local
 .env.*

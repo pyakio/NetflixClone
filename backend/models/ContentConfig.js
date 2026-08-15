@@ -45,8 +45,7 @@ const ContentConfigSchema = new mongoose.Schema({
             { id: 'my-list', title: 'My List', type: 'library', visible: true, order: 7 }
         ]
     },
-    collections: [CuratedCollectionSchema],
-    updatedAt: { type: Date, default: Date.now }
+    collections: [CuratedCollectionSchema]
 }, {
     timestamps: true
 });

@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const token = await currentUserSession.getIdToken();
-            const activeProfile = JSON.parse(localStorage.getItem('netflix_active_profile') || 'null');
+            const activeProfile = JSON.parse(sessionStorage.getItem('netflix_active_profile') || 'null');
             const profileId = activeProfile ? (activeProfile.id || activeProfile._id) : null;
 
-            const base = (typeof BACKEND_API_BASE_URL !== 'undefined') ? BACKEND_API_BASE_URL : 'http://localhost:5000/api';
+            const base = (typeof BACKEND_API_BASE_URL !== 'undefined') ? BACKEND_API_BASE_URL : 'http://localhost:5001/api';
             const headers = {
                 'Authorization': `Bearer ${token}`
             };

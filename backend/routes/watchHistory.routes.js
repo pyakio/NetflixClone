@@ -21,7 +21,7 @@ router.get('/insights', getViewingInsights);
 
 router.route('/')
     .get(getWatchHistory)
-    .post(addToWatchHistory);
+    .post(validateWatchHistoryInput, addToWatchHistory);
 
 router.route('/:movieId')
     .patch(validateWatchHistoryInput, updateProgress)

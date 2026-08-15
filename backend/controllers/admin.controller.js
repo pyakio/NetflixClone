@@ -2,6 +2,8 @@
 // Admin Controller — Task 23: Admin API Endpoints Handlers
 // ==========================================================================
 
+const mongoose = require('mongoose');
+
 const {
     getPlatformStats,
     getPopularMovies,
@@ -145,11 +147,11 @@ async function logAdminAction(req, action, resource, details) {
         action,
         resource,
         details,
-        ipAddress: req.ip || req.connection.remoteAddress,
+        ipAddress: req.ip || (req.socket && req.socket.remoteAddress) || 'unknown',
         timestamp: new Date()
     };
     try {
-        if (AdminAuditLog.db && AdminAuditLog.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             await AdminAuditLog.create(entry);
         } else {
             memoryAuditLogs.unshift(entry);
@@ -167,7 +169,7 @@ async function logAdminAction(req, action, resource, details) {
 const getContentConfig = async (req, res, next) => {
     try {
         let config = null;
-        if (ContentConfig.db && ContentConfig.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             config = await ContentConfig.findOne().lean();
             if (!config) {
                 config = await ContentConfig.create(memoryContentConfig);
@@ -213,7 +215,7 @@ const updateFeaturedMovie = async (req, res, next) => {
             updatedAt: new Date()
         };
 
-        if (ContentConfig.db && ContentConfig.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             await ContentConfig.findOneAndUpdate(
                 {},
                 { $set: { featuredMovie: featuredData, updatedAt: new Date() } },
@@ -259,7 +261,7 @@ const updateSectionsConfig = async (req, res, next) => {
             order: Number(s.order) || (idx + 1)
         }));
 
-        if (ContentConfig.db && ContentConfig.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             await ContentConfig.findOneAndUpdate(
                 {},
                 { $set: { sections: sanitizedSections, updatedAt: new Date() } },
@@ -315,7 +317,7 @@ const createCuratedCollection = async (req, res, next) => {
             updatedAt: new Date()
         };
 
-        if (ContentConfig.db && ContentConfig.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             await ContentConfig.findOneAndUpdate(
                 {},
                 { $push: { collections: newCollection }, $set: { updatedAt: new Date() } },
@@ -353,7 +355,7 @@ const deleteCuratedCollection = async (req, res, next) => {
             });
         }
 
-        if (ContentConfig.db && ContentConfig.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             await ContentConfig.findOneAndUpdate(
                 {},
                 { $pull: { collections: { id: colId } }, $set: { updatedAt: new Date() } }
@@ -382,7 +384,7 @@ const deleteCuratedCollection = async (req, res, next) => {
 const getAuditLogs = async (req, res, next) => {
     try {
         let logs = [];
-        if (AdminAuditLog.db && AdminAuditLog.db.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             logs = await AdminAuditLog.find()
                 .sort({ timestamp: -1 })
                 .limit(50)
