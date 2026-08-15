@@ -1,6 +1,10 @@
-// ==========================================================================
-// Authentication Middleware — Task 13: Firebase Token Verification
-// ==========================================================================
+/**
+ * ============================================================================
+ * Authentication Middleware (requireAuth)
+ * ============================================================================
+ * Intercepts protected requests, parses the Bearer JWT token from headers,
+ * verifies cryptographic signatures with Firebase Admin, and attaches user info.
+ */
 
 const { admin, isFirebaseAdminConfigured } = require('../config/firebase');
 

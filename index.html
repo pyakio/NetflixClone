@@ -69,35 +69,27 @@
             </div>
         </section>
 
-        <!-- Continue Watching Section (Task 16) -->
-        <section class="movie-section continue-watching-section" id="continue-watching-section" aria-labelledby="continue-watching-title" style="display: none;">
-            <div class="section-header-wrap">
-                <h2 id="continue-watching-title" class="section-title">Continue Watching</h2>
-            </div>
+        <!-- Continue Watching Shelf -->
+        <section class="movie-section continue-watching-section" id="continue-watching-section" style="display: none;">
+            <h2 class="section-title">Continue Watching</h2>
             <div class="movie-row" id="continue-watching-row"></div>
         </section>
 
-        <!-- Because You Watched Section (Task 18) -->
-        <section class="movie-section" id="because-you-watched-section" aria-labelledby="because-you-watched-title" style="display: none;">
-            <div class="section-header-wrap">
-                <h2 id="because-you-watched-title" class="section-title">Because You Watched</h2>
-            </div>
+        <!-- Because You Watched Recommendation Shelf -->
+        <section class="movie-section personalized-section" id="because-you-watched-section" style="display: none;">
+            <h2 class="section-title" id="because-you-watched-title">Because You Watched</h2>
             <div class="movie-row" id="because-you-watched-row"></div>
         </section>
 
-        <!-- My List Picks Section (Task 18) -->
-        <section class="movie-section" id="my-list-picks-section" aria-labelledby="my-list-picks-title" style="display: none;">
-            <div class="section-header-wrap">
-                <h2 id="my-list-picks-title" class="section-title">Recommended From Your Favorites</h2>
-            </div>
+        <!-- My List Picks Recommendation Shelf -->
+        <section class="movie-section personalized-section" id="my-list-picks-section" style="display: none;">
+            <h2 class="section-title">From Your List & Similar</h2>
             <div class="movie-row" id="my-list-picks-row"></div>
         </section>
 
-        <!-- For You Section (Task 18) -->
-        <section class="movie-section" id="for-you-section" aria-labelledby="for-you-title" style="display: none;">
-            <div class="section-header-wrap">
-                <h2 id="for-you-title" class="section-title">Top Picks For You</h2>
-            </div>
+        <!-- Top Picks For You Recommendation Shelf -->
+        <section class="movie-section personalized-section" id="for-you-section" style="display: none;">
+            <h2 class="section-title">Top Picks For You</h2>
             <div class="movie-row" id="for-you-row"></div>
         </section>
 
@@ -134,26 +126,26 @@
             </div>
         </section>
 
-        <!-- Categories / Genre Directory Section (Task 32) -->
+        <!-- Explore by Genre / Category Directory -->
         <section class="movie-section categories-section" aria-labelledby="categories-title">
             <div class="section-header-wrap">
-                <h2 id="categories-title" class="section-title">Browse by Category</h2>
+                <h2 id="categories-title" class="section-title">Explore by Genre</h2>
                 <a href="browse.html" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
             </div>
             <div class="genre-cards-grid" id="genre-cards-grid">
-                <a href="browse.html?genre=28" class="genre-card genre-action"><span class="genre-icon">💥</span><span class="genre-name">Action</span></a>
-                <a href="browse.html?genre=12" class="genre-card genre-adventure"><span class="genre-icon">🗺️</span><span class="genre-name">Adventure</span></a>
-                <a href="browse.html?genre=16" class="genre-card genre-animation"><span class="genre-icon">🎨</span><span class="genre-name">Animation</span></a>
-                <a href="browse.html?genre=35" class="genre-card genre-comedy"><span class="genre-icon">😂</span><span class="genre-name">Comedy</span></a>
-                <a href="browse.html?genre=80" class="genre-card genre-crime"><span class="genre-icon">🕵️</span><span class="genre-name">Crime</span></a>
-                <a href="browse.html?genre=18" class="genre-card genre-drama"><span class="genre-icon">🎭</span><span class="genre-name">Drama</span></a>
-                <a href="browse.html?genre=27" class="genre-card genre-horror"><span class="genre-icon">👻</span><span class="genre-name">Horror</span></a>
-                <a href="browse.html?genre=878" class="genre-card genre-scifi"><span class="genre-icon">🚀</span><span class="genre-name">Sci-Fi</span></a>
-                <a href="browse.html?genre=53" class="genre-card genre-thriller"><span class="genre-icon">⚡</span><span class="genre-name">Thriller</span></a>
+                <a href="browse.html?genre=28" class="genre-card genre-action">Action</a>
+                <a href="browse.html?genre=12" class="genre-card genre-adventure">Adventure</a>
+                <a href="browse.html?genre=16" class="genre-card genre-animation">Animation</a>
+                <a href="browse.html?genre=35" class="genre-card genre-comedy">Comedy</a>
+                <a href="browse.html?genre=80" class="genre-card genre-crime">Crime</a>
+                <a href="browse.html?genre=18" class="genre-card genre-drama">Drama</a>
+                <a href="browse.html?genre=27" class="genre-card genre-horror">Horror</a>
+                <a href="browse.html?genre=878" class="genre-card genre-scifi">Sci-Fi</a>
+                <a href="browse.html?genre=53" class="genre-card genre-thriller">Thriller</a>
             </div>
         </section>
 
-        <!-- My List 2.0 Personal Content Library Section (Task 33) -->
+        <!-- My List (Personal Content Library) -->
         <section class="movie-section my-list-section" id="my-list-section" aria-labelledby="my-list-title">
             <div class="library-header-row">
                 <div class="library-title-group">
@@ -220,13 +212,11 @@
             <button type="button" class="movie-modal-close" id="movie-modal-close" aria-label="Close movie details">×</button>
 
             <div class="movie-modal-hero" id="modal-hero">
-                <!-- FIX: Removed src="" to prevent spurious network request; src set via JS only -->
                 <img class="movie-modal-backdrop-image" id="modal-backdrop-img" alt="" loading="lazy">
                 <div class="modal-hero-gradient"></div>
             </div>
 
             <div class="movie-modal-body" id="modal-body">
-                <!-- FIX: Removed src="" to prevent spurious network request; src set via JS only -->
                 <img class="movie-modal-poster" id="modal-poster-img" alt="" loading="lazy">
 
                 <div class="movie-modal-info">
@@ -242,7 +232,6 @@
 
                     <p class="movie-modal-overview" id="modal-overview"></p>
 
-                    <!-- Action buttons row (Watch Trailer + Watch Now + My List) -->
                     <div class="movie-modal-actions">
                         <button type="button" class="movie-modal-trailer-btn" id="modal-trailer-btn">
                             <span class="trailer-btn-icon" aria-hidden="true">▶</span>
@@ -256,15 +245,15 @@
                         </button>
                     </div>
 
-                    <!-- Cast Section (Task 19) -->
-                    <div class="modal-section" id="modal-cast-section" style="display: none;">
-                        <h3 class="modal-section-heading">Cast</h3>
+                    <!-- Cast Members Shelf -->
+                    <div class="modal-cast-section" id="modal-cast-section" style="display: none;">
+                        <h3 class="modal-subheading">Top Cast</h3>
                         <div class="cast-grid" id="modal-cast-grid"></div>
                     </div>
 
-                    <!-- Similar Movies Section (Task 19) -->
-                    <div class="modal-section" id="modal-similar-section" style="display: none;">
-                        <h3 class="modal-section-heading">More Like This</h3>
+                    <!-- Related Titles Shelf ("More Like This") -->
+                    <div class="modal-similar-section" id="modal-similar-section" style="display: none;">
+                        <h3 class="modal-subheading">More Like This</h3>
                         <div class="similar-grid" id="modal-similar-grid"></div>
                     </div>
                 </div>

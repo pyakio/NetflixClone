@@ -1,6 +1,10 @@
-// ==========================================================================
-// Notification Model — Task 20: User Activity & Notification Schema
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Activity & In-App Notification Schema
+ * ============================================================================
+ * Records user activity events (watchlist updates, watch milestones, recommendations)
+ * with read/unread statuses and TTL auto-cleanup indexing.
+ */
 
 const mongoose = require('mongoose');
 

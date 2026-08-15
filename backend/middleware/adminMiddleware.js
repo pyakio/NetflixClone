@@ -1,6 +1,10 @@
-// ==========================================================================
-// Admin Middleware — Task 23: Server-Side Admin Authorization
-// ==========================================================================
+/**
+ * ============================================================================
+ * Administrator Role-Based Access Control Middleware (requireAdmin)
+ * ============================================================================
+ * Enforces admin-only access on restricted analytics and content curation endpoints
+ * by validating user email / UID against configurable environment allowlists.
+ */
 
 /**
  * Default admin allowlist. Can be overridden via ADMIN_EMAILS or ADMIN_UIDS in .env

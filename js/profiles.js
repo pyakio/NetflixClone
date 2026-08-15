@@ -1,9 +1,18 @@
-// ==========================================================================
-// Profiles Controller — Task 21: Multiple Viewing Profiles Manager
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Viewing Profiles Controller ("Who's Watching?")
+ * ============================================================================
+ * Manages user persona selection, profile creation, avatar customization,
+ * kids content filtering mode, and session persistence in sessionStorage.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }

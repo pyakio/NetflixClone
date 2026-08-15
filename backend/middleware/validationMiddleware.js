@@ -1,6 +1,10 @@
-// ==========================================================================
-// Validation Middleware — Task 24: Input Validation & Sanitization
-// ==========================================================================
+/**
+ * ============================================================================
+ * Input Validation & Sanitization Middleware
+ * ============================================================================
+ * Sanitizes incoming request bodies and validates URL parameters (ObjectIds,
+ * movie IDs, watchlist mutations) before routing to controllers.
+ */
 
 const mongoose = require('mongoose');
 

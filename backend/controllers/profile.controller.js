@@ -1,6 +1,10 @@
-// ==========================================================================
-// Profile Controller — Task 21: Multiple Viewing Profiles Handlers
-// ==========================================================================
+/**
+ * ============================================================================
+ * Viewing Profile API Controller
+ * ============================================================================
+ * Manages viewing persona CRUD operations, 5-profile account quotas, avatar updates,
+ * kids mode filters, and cascading history cleanups upon deletion.
+ */
 
 const { Profile, ALLOWED_AVATARS } = require('../models/Profile');
 const WatchHistory = require('../models/WatchHistory');

@@ -1,9 +1,18 @@
-// ==========================================================================
-// Admin Dashboard Controller — Task 23: Platform Analytics
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Administrator Dashboard & Business Intelligence Controller
+ * ============================================================================
+ * Handles platform KPI metrics calculation, content management (headline hero
+ * selector, row order, curated collections), and immutable audit log views.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }
@@ -413,9 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==========================================
-    // 3.1 CONTENT MANAGEMENT (Task 35)
-    // ==========================================
+    // ========================================================================
+    // 3.1 CONTENT MANAGEMENT SYSTEM (CMS)
+    // ========================================================================
     const formFeatured = id('form-featured-movie');
     const inputFeaturedId = id('input-featured-id');
     const inputFeaturedTitle = id('input-featured-title');

@@ -1,10 +1,14 @@
-// ==========================================================================
-// TMDB API Configuration (Task 9)
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Client Configuration & API Endpoints
+ * ============================================================================
+ * Defines TMDB API configurations, backend base URL resolution with dynamic
+ * environment detection (localhost / production origin), and creative commons
+ * sample video streaming assets.
+ */
 
-// Replace 'YOUR_TMDB_API_KEY' with your official TMDB API key.
-// Note: In client-side web applications, API keys embedded in front-end JS 
-// are visible to browser inspect tools. Keep real secret credentials in local .gitignore environment.
+// Replace 'YOUR_TMDB_API_KEY' with your official TMDB v3 API key.
+// In development, the app automatically falls back to curated mock datasets when unconfigured.
 const TMDB_API_KEY = 'YOUR_TMDB_API_KEY';
 
 // Base API URL and Image CDN URL
@@ -43,7 +47,7 @@ if (typeof window !== 'undefined') {
     window.BACKEND_API_BASE_URL = BACKEND_API_BASE_URL;
 }
 
-// Authorized Public Domain / Creative Commons Video Sources for Watch Experience (Task 27)
+// Open-source Creative Commons streaming video sources for demonstration playback
 const AUTHORIZED_VIDEO_SOURCES = [
     {
         id: 'sample-1',

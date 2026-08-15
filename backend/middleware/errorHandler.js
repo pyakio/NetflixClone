@@ -1,6 +1,10 @@
-// ==========================================================================
-// Error Handling Middleware — Task 13: Error Responses & 404
-// ==========================================================================
+/**
+ * ============================================================================
+ * Centralized Error & 404 Exception Handling Middleware
+ * ============================================================================
+ * Catches unhandled exceptions, Mongoose CastErrors, validation errors, and
+ * standardizes API JSON error responses across production and development modes.
+ */
 
 /**
  * 404 Not Found Middleware for unknown routes

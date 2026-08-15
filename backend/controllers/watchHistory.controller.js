@@ -1,6 +1,10 @@
-// ==========================================================================
-// Watch History Controller — Task 16: Continue Watching & History Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Watch History & Playback Progress Controller
+ * ============================================================================
+ * Handles continuous watching synchronization, progress updates, completion
+ * rate calculations, Continue Watching removals, and personal viewing analytics.
+ */
 
 const WatchHistory = require('../models/WatchHistory');
 const { createNotification } = require('../services/notification.service');
@@ -100,7 +104,7 @@ const addToWatchHistory = async (req, res, next) => {
             { upsert: true, new: true, setDefaultsOnInsert: true }
         );
 
-        // Safely trigger WATCH_STARTED notification (Task 20)
+        // Dispatch WATCH_STARTED notification asynchronously
         createNotification({
             firebaseUid: req.user.uid,
             type: 'WATCH_STARTED',
@@ -226,7 +230,7 @@ const removeFromWatchHistory = async (req, res, next) => {
 };
 
 /**
- * @desc    Get user viewing insights & activity analytics for active profile (Task 34)
+ * @desc    Get user viewing insights & activity analytics for active profile
  * @route   GET /api/watch-history/insights
  * @access  Private (Firebase Token)
  */

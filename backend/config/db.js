@@ -1,6 +1,10 @@
-// ==========================================================================
-// Database Configuration — Task 13: MongoDB Connection
-// ==========================================================================
+/**
+ * ============================================================================
+ * Database Configuration & Mongoose Connection Manager
+ * ============================================================================
+ * Handles MongoDB Atlas connection initialization, error handling, and connection
+ * pool state introspection for application health monitoring.
+ */
 
 const mongoose = require('mongoose');
 

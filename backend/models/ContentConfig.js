@@ -1,6 +1,10 @@
-// ==========================================================================
-// Content Config Model — Task 35: Admin Content Management
-// ==========================================================================
+/**
+ * ============================================================================
+ * Content Configuration & CMS Layout Schema
+ * ============================================================================
+ * Defines global platform layouts, featured headline hero overrides, category
+ * row visibility/ordering, and themed curated movie collections.
+ */
 
 const mongoose = require('mongoose');
 

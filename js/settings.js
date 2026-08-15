@@ -1,9 +1,18 @@
-// ==========================================================================
-// Settings Controller — Task 22: Account Settings & Security
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Account Settings & Security Controller
+ * ============================================================================
+ * Handles user credential management, email verification status, password
+ * updates, account deletion requests, and playback preferences.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }

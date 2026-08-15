@@ -1,6 +1,10 @@
-// ==========================================================================
-// Firebase Admin Configuration — Task 13: Server-side Auth
-// ==========================================================================
+/**
+ * ============================================================================
+ * Firebase Admin SDK Configuration & Initialization
+ * ============================================================================
+ * Initializes the Firebase Admin SDK using service account credentials for
+ * server-side JWT verification and secure user record management.
+ */
 
 const admin = require('firebase-admin');
 

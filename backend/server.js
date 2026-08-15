@@ -1,6 +1,10 @@
-// ==========================================================================
-// Netflix Clone Backend Server — Task 13: Express & MongoDB Foundation
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Express REST API Bootstrap & Server Lifecycle
+ * ============================================================================
+ * Initializes Express middleware (Helmet, CORS, Rate Limiting), database pooling,
+ * REST route mounting, and graceful SIGINT/SIGTERM process termination.
+ */
 
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });

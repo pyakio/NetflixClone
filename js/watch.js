@@ -1,9 +1,18 @@
-// ==========================================================================
-// Watch Controller — Task 27: Watch Page & HTML5 Streaming Experience
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — HTML5 Cinema Video Player & Progress Controller
+ * ============================================================================
+ * Controls custom media playback, scrubber seeking, buffering indicators,
+ * 10-second throttled progress persistence, volume control, and fullscreen.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }

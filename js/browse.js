@@ -1,10 +1,18 @@
-// ==========================================================================
-// Browse & Advanced Discovery Controller — Task 19 Enhanced
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Browse & Advanced Movie Discovery Controller
+ * ============================================================================
+ * Manages dynamic catalog exploration, debounced full-text search, multi-faceted
+ * genre pill filters, release year / rating filters, and infinite pagination.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Helper: Element by ID
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }
@@ -70,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle          = id('menu-toggle');
     const navbar              = document.querySelector('.navbar');
 
-    // Modal DOM Elements (Task 19 Enhanced)
+    // Movie Details Modal Elements
     const movieModal          = id('movie-modal');
     const modalCloseBtn       = id('movie-modal-close');
     const modalOverlay        = id('modal-overlay');
@@ -93,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalSimilarSection  = id('modal-similar-section');
     const modalSimilarGrid    = id('modal-similar-grid');
 
-    // Dedicated Trailer Modal (Task 19)
+    // Dedicated Trailer Modal Elements
     const trailerModal        = id('trailer-modal');
     const trailerOverlay      = id('trailer-overlay');
     const trailerCloseBtn     = id('trailer-modal-close');
@@ -1289,7 +1297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navAuthContainer.textContent = '';
 
         if (user) {
-            // Notification Bell Wrapper (Task 20)
+            // Notification Bell Header Component
             const notifWrapper = document.createElement('div');
             notifWrapper.className = 'nav-notification-wrapper';
             notifWrapper.id = 'nav-notification-wrapper';
@@ -1321,8 +1329,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             notifWrapper.appendChild(bellBtn);
             notifWrapper.appendChild(dropdown);
+            navAuthContainer.appendChild(notifWrapper);
 
-            // Profile Switcher Component (Task 21)
+            // Viewing Profile Switcher Header Component
             const switcherWrapper = document.createElement('div');
             switcherWrapper.className = 'nav-profile-switcher';
             switcherWrapper.id = 'nav-profile-switcher';

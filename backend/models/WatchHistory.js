@@ -1,6 +1,10 @@
-// ==========================================================================
-// WatchHistory Model — Task 16: MongoDB Watch History Schema
-// ==========================================================================
+/**
+ * ============================================================================
+ * Watch History & Playback Progress Schema
+ * ============================================================================
+ * Tracks viewing progress, playback duration, completion status, and compound
+ * uniqueness indices ({ firebaseUid: 1, movieId: 1, profileId: 1 }).
+ */
 
 const mongoose = require('mongoose');
 

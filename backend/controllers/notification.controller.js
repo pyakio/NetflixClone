@@ -1,6 +1,10 @@
-// ==========================================================================
-// Notification Controller — Task 20: User Notification API Handlers
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Notification & Activity Feed Controller
+ * ============================================================================
+ * Handles paginated notification queries, unread counts, marking notifications as read,
+ * and deleting notification items.
+ */
 
 const notificationService = require('../services/notification.service');
 

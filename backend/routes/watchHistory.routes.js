@@ -1,6 +1,9 @@
-// ==========================================================================
-// Watch History Routes — Task 16: Protected Watch History Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Watch History & Playback Progress REST API Routes
+ * ============================================================================
+ * Defines endpoints for recording video progress, fetching history rows, and insights.
+ */
 
 const express = require('express');
 const router = express.Router();

@@ -1,20 +1,26 @@
-// ==========================================================================
-// Netflix Clone JavaScript — Task 19: Trailer & Movie Watch Experience
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Core Client Application Controller
+ * ============================================================================
+ * Handles homepage content rendering, TMDB catalog integrations, personalized
+ * content recommendations, Continue Watching shelves, watchlist mutations,
+ * details modal popups, and trailer playback.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================
-    // UTILITY: id() Helper
-    // ==========================================
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }
 
-
-    // ==========================================
-    // 1. DOM ELEMENTS
-    // ==========================================
+    // ========================================================================
+    // 1. DOM ELEMENT REFERENCES
+    // ========================================================================
     const navbar          = document.querySelector('.navbar');
     const menuToggle      = id('menu-toggle');
     const searchBtn       = id('search-btn');
@@ -26,10 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroInfoBtn     = document.querySelector('.hero .btn-info');
     const toastContainer  = id('toast-container');
 
+    // Continue Watching & Shelf Sections
     const continueWatchingSection = id('continue-watching-section');
     const continueWatchingRow     = id('continue-watching-row');
 
-    // Personalized Sections (Task 18)
+    // Personalized Recommendation Sections
     const becauseYouWatchedSection = id('because-you-watched-section');
     const becauseYouWatchedTitle   = id('because-you-watched-title');
     const becauseYouWatchedRow     = id('because-you-watched-row');
@@ -44,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const popularRow      = id('popular-row');
     const actionRow       = id('action-row');
 
-    // Modal DOM Elements (Task 19 Enhanced)
+    // Movie Details Modal DOM References
     const movieModal         = id('movie-modal');
     const modalCloseBtn      = id('movie-modal-close');
     const modalOverlay       = id('modal-overlay');
@@ -68,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalSimilarGrid   = id('modal-similar-grid');
     const modalContent       = document.querySelector('.movie-modal-content');
 
-    // Dedicated Trailer Modal (Task 19)
+    // Dedicated Trailer Modal Elements
     const trailerModal       = id('trailer-modal');
     const trailerOverlay     = id('trailer-overlay');
     const trailerCloseBtn    = id('trailer-modal-close');
@@ -151,9 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 4. RECOMMENDATION SERVICE (Task 18 & 21)
-    // ==========================================
+    // ========================================================================
+    // 4. PERSONALIZED RECOMMENDATION SERVICE
+    // ========================================================================
     async function apiFetchRecommendations() {
         if (typeof AuthService === 'undefined' || !currentUserSession) return null;
 
@@ -209,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Personalized Hero (Task 28)
+        // Dynamic Headline Hero Personalization
         if (data.heroRecommendation && heroTitleEl) {
             currentHeroMovie = data.heroRecommendation;
             heroTitleEl.textContent = data.heroRecommendation.title;
@@ -253,9 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 5. WATCH HISTORY SERVICE (Task 16)
-    // ==========================================
+    // ========================================================================
+    // 5. CONTINUOUS WATCHING & WATCH HISTORY SERVICE
+    // ========================================================================
 
     async function apiFetchWatchHistory() {
         if (typeof AuthService === 'undefined' || !currentUserSession) return [];
@@ -454,9 +461,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 6. WATCHLIST SERVICE (Task 14)
-    // ==========================================
+    // ========================================================================
+    // 6. PROFILE-SCOPED WATCHLIST SERVICE
+    // ========================================================================
 
     function getLocalStorageKey() {
         if (currentUserSession && currentUserSession.uid) {
@@ -1037,9 +1044,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 10. MOVIE DETAILS & TMDB INTEGRATION (Task 19)
-    // ==========================================
+    // ========================================================================
+    // 10. MOVIE DETAILS & TMDB CATALOG INTEGRATION
+    // ========================================================================
     async function fetchMovieDetails(movieId) {
         if (isApiKeyConfigured()) {
             const base   = (typeof TMDB_BASE_URL !== 'undefined') ? TMDB_BASE_URL : 'https://api.themoviedb.org/3';
@@ -1347,7 +1354,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Render Cast Section (Task 19 & 31)
+        // Render Cast Members Grid
         if (modalCastSection && modalCastGrid) {
             modalCastGrid.textContent = '';
             const topCast = (Array.isArray(castList) ? castList : []).slice(0, 8);
@@ -1389,7 +1396,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Render Similar Movies ("More Like This" - Task 19 & 31)
+        // Render Related Titles ("More Like This" Shelf)
         if (modalSimilarSection && modalSimilarGrid) {
             modalSimilarGrid.textContent = '';
             const topSimilar = (Array.isArray(similarList) ? similarList : []).slice(0, 6);
@@ -1430,9 +1437,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 14. TRAILER MODAL CONTROLS (Task 19)
-    // ==========================================
+    // ========================================================================
+    // 14. VIDEO TRAILER MODAL CONTROLS
+    // ========================================================================
     function openTrailerModal(youtubeKey, movieTitle) {
         if (!trailerModal || !trailerVideoWrapper || !youtubeKey) {
             showToast('Trailer unavailable.');
@@ -1555,9 +1562,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==========================================
-    // 16. WATCHLIST TOGGLE HANDLER (Task 14 & 18)
-    // ==========================================
+    // ========================================================================
+    // 16. WATCHLIST TOGGLE & OPTIMISTIC UI MUTATIONS
+    // ========================================================================
     if (modalWatchlistBtn) {
         modalWatchlistBtn.addEventListener('click', async () => {
             if (!currentModalMovieData || isWatchlistMutating) return;
@@ -1633,7 +1640,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navAuthContainer.textContent = '';
 
         if (user) {
-            // Notification Bell Wrapper (Task 20)
+            // Notification Bell Header Component
             const notifWrapper = document.createElement('div');
             notifWrapper.className = 'nav-notification-wrapper';
             notifWrapper.id = 'nav-notification-wrapper';
@@ -1665,8 +1672,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             notifWrapper.appendChild(bellBtn);
             notifWrapper.appendChild(dropdown);
+            navAuthContainer.appendChild(notifWrapper);
 
-            // Profile Switcher Component (Task 21)
+            // Viewing Profile Switcher Header Component
             const switcherWrapper = document.createElement('div');
             switcherWrapper.className = 'nav-profile-switcher';
             switcherWrapper.id = 'nav-profile-switcher';

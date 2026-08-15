@@ -1,6 +1,10 @@
-// ==========================================================================
-// Admin Controller — Task 23: Admin API Endpoints Handlers
-// ==========================================================================
+/**
+ * ============================================================================
+ * Administrator API Controllers
+ * ============================================================================
+ * Handles administrative REST requests: platform KPI analytics aggregation,
+ * user listings, content layout curation, collection builder, and audit trails.
+ */
 
 const mongoose = require('mongoose');
 

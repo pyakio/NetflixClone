@@ -1,6 +1,9 @@
-// ==========================================================================
-// User Routes — Task 15: Protected User Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Account & Profile Metadata REST API Routes
+ * ============================================================================
+ * Defines endpoints for retrieving user details and profile metadata synchronization.
+ */
 
 const express = require('express');
 const router = express.Router();

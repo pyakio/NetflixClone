@@ -1,9 +1,18 @@
-// ==========================================================================
-// Notifications & Activity Center Controller — Task 20
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Notifications & Activity Center Controller
+ * ============================================================================
+ * Manages user activity feeds, watchlist alerts, recommendation updates,
+ * unread badges, mark-all-as-read actions, and header notification popovers.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * DOM Helper: Retrieves an element by its ID.
+     * @param {string} elementId
+     * @returns {HTMLElement|null}
+     */
     function id(elementId) {
         return document.getElementById(elementId);
     }
@@ -240,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
             notifWrapper.appendChild(bellBtn);
             notifWrapper.appendChild(dropdown);
 
-            // Profile Switcher Component (Task 21)
+            // Viewing Profile Switcher Header Component
             const switcherWrapper = document.createElement('div');
             switcherWrapper.className = 'nav-profile-switcher';
             switcherWrapper.id = 'nav-profile-switcher';

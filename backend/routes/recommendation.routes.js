@@ -1,6 +1,9 @@
-// ==========================================================================
-// Recommendation Routes — Task 18: Personalized Recommendation Routes
-// ==========================================================================
+/**
+ * ============================================================================
+ * Personalized Recommendations REST API Routes
+ * ============================================================================
+ * Defines endpoints for fetching profile-personalized movie rows and hero picks.
+ */
 
 const express = require('express');
 const router = express.Router();

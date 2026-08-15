@@ -1,6 +1,10 @@
-// ==========================================================================
-// Admin Analytics Service — Task 36: Advanced Platform Analytics & BI
-// ==========================================================================
+/**
+ * ============================================================================
+ * Platform Analytics & Business Intelligence Service
+ * ============================================================================
+ * Computes MongoDB aggregate metrics across accounts, profiles, watch history,
+ * completion rates, watch durations, and recent platform activity.
+ */
 
 const mongoose = require('mongoose');
 const User = require('../models/User');

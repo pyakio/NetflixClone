@@ -1,11 +1,9 @@
-// ==========================================================================
-// Firebase Configuration — Task 12: Authentication & User Accounts
-// ==========================================================================
-
 /**
- * Firebase Web Configuration
- * Replace the placeholder values with your actual Firebase project settings
- * from the Firebase Console (Project Settings > General > Your apps > Web app).
+ * ============================================================================
+ * Netflix Clone — Firebase Web Client Configuration
+ * ============================================================================
+ * Initializes the Firebase App SDK for client-side authentication and session
+ * lifecycle management. Replace placeholder values with your Firebase Console credentials.
  */
 const FIREBASE_CONFIG = {
     apiKey: "YOUR_FIREBASE_API_KEY",

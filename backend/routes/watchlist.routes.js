@@ -1,6 +1,9 @@
-// ==========================================================================
-// Watchlist Routes — Task 14: Protected Watchlist Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Watchlist ("My List") REST API Routes
+ * ============================================================================
+ * Defines endpoints for adding, fetching, and removing titles from personal watchlists.
+ */
 
 const express = require('express');
 const router = express.Router();

@@ -1,6 +1,10 @@
-// ==========================================================================
-// Health Routes — Task 13: Public Health Check
-// ==========================================================================
+/**
+ * ============================================================================
+ * Health Check & Platform Uptime Probes
+ * ============================================================================
+ * Exposes unauthenticated health check endpoints reporting Node.js uptime,
+ * MongoDB connection pool state, and Firebase Admin credentials status.
+ */
 
 const express = require('express');
 const router = express.Router();

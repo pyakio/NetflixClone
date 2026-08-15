@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NETFLIX CLONE — DESIGN SYSTEM & TOKEN ARCHITECTURE (Task 30)
+   NETFLIX CLONE — DESIGN SYSTEM & TOKEN ARCHITECTURE
    ========================================================================== */
 
 * {
@@ -517,7 +517,7 @@ main {
 }
 
 /* ==========================================================================
-   Movie Sections & Cards (Task 5, 7, & Signature Netflix 3D Card Hover)
+   Movie Sections & Signature Netflix 3D Card Hover
    ========================================================================== */
 .movie-section {
     padding: 0 var(--content-padding);
@@ -785,7 +785,7 @@ main {
 }
 
 /* ==========================================================================
-   Toast Notifications UI (Task 8)
+   Toast Notifications UI
    ========================================================================== */
 .toast-container {
     position: fixed;
@@ -819,7 +819,7 @@ main {
 }
 
 /* ==========================================================================
-   Responsive Breakpoint Architecture (Task 7 & 8 QA Refinements)
+   Responsive Breakpoint Architecture
    ========================================================================== */
 
 /* Laptop & Medium Screens (769px - 1024px) */
@@ -1054,7 +1054,7 @@ main {
 }
 
 /* ==========================================================================
-   Loading, Error & Empty States (Task 9)
+   Loading, Error & Empty States
    ========================================================================== */
 .section-loading {
     color: var(--text-secondary);
@@ -1094,7 +1094,7 @@ main {
 }
 
 /* ==========================================================================
-   Movie Details Modal Styling (Task 10)
+   Movie Details Modal Styling
    ========================================================================== */
 .movie-modal {
     position: fixed;
@@ -1360,21 +1360,17 @@ main {
 }
 
 /* ==========================================================================
-   Task 11: Modal Action Buttons Row
+   Modal Action Buttons Row
    ========================================================================== */
-
-/* Wrapper for Watch Now + My List buttons */
-.movie-modal-actions {
+.modal-actions-row {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
-    align-self: flex-start;
 }
 
-/* ==========================================================================
-   Task 11: Watchlist (My List) Toggle Button
-   ========================================================================== */
+/* Watchlist (My List) Toggle Button */
 .movie-modal-watchlist-btn {
     display: inline-flex;
     align-items: center;
@@ -1424,7 +1420,7 @@ main {
 }
 
 /* ==========================================================================
-   Task 11: My List Section
+   My List Section & Empty State
    ========================================================================== */
 
 /* The section itself reuses .movie-section — just a scroll-target separator */
@@ -1466,7 +1462,7 @@ main {
 }
 
 /* ==========================================================================
-   Task 12: Authentication Pages (Login & Register) & Navbar Auth State
+   Authentication Pages (Login & Register) & Navbar Auth State
    ========================================================================== */
 
 /* Auth Page Body */
@@ -1879,7 +1875,7 @@ main {
 }
 
 /* ==========================================================================
-   Task 15: User Profile & Account Dashboard Styles
+   User Profile & Account Dashboard Styles
    ========================================================================== */
 
 /* Profile Page Layout */
@@ -2155,7 +2151,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 16: Continue Watching & Watch History Styles
+   Continue Watching & Watch History Styles
    ========================================================================== */
 
 .continue-watching-section {
@@ -2240,7 +2236,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 17: Browse & Advanced Movie Discovery Styles
+   Browse & Advanced Movie Discovery Styles
    ========================================================================== */
 
 /* Browse Page Layout */
@@ -2569,7 +2565,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 19: Trailer Modal, Cast, & Movie Watch Experience Styles
+   Trailer Modal, Cast, & Movie Watch Experience Styles
    ========================================================================== */
 
 /* Trailer Button in Movie Modal */
@@ -2783,7 +2779,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 20: Notifications & Activity Center Styles
+   Notifications & Activity Center Styles
    ========================================================================== */
 
 /* Navbar Notification Bell & Wrapper */
@@ -3212,7 +3208,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 21: Multiple Viewing Profiles & Switcher Styles
+   Multiple Viewing Profiles & Switcher Styles
    ========================================================================== */
 
 /* Navbar Profile Switcher */
@@ -3731,7 +3727,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 22: Account Settings & Security Styles
+   Account Settings & Security Styles
    ========================================================================== */
 
 .settings-page-body {
@@ -4091,7 +4087,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 23: Admin Dashboard & Platform Analytics Styles
+   Admin Dashboard & Platform Analytics Styles
    ========================================================================== */
 
 .admin-page-body {
@@ -4539,7 +4535,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 27: Watch Page & HTML5 Streaming Experience Styles
+   Watch Page & HTML5 Streaming Experience Styles
    ========================================================================== */
 
 .watch-page-body {
@@ -5129,7 +5125,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 28: Advanced Personalization Styles
+   Advanced Content Personalization Styles
    ========================================================================== */
 
 .hero-rec-badge {
@@ -5149,7 +5145,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 29: Advanced Search & Discovery 2.0 Styles
+   Advanced Search & Auto-Suggestions Styles
    ========================================================================== */
 
 .search-container {
@@ -5312,7 +5308,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 31: Advanced Movie Details Styles
+   Advanced Movie Details & Cast Styles
    ========================================================================== */
 
 .btn-read-more {
@@ -5333,7 +5329,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 32: Genre & Category Styles
+   Genre & Category Directory Styles
    ========================================================================== */
 
 .genre-directory-section {
@@ -5386,7 +5382,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 32: Category Cards Grid & Vibrant Cinematic Genre Badges
+   Category Cards Grid & Vibrant Cinematic Genre Badges
    ========================================================================== */
 .genre-cards-grid {
     display: grid;
@@ -5554,7 +5550,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 33: My List 2.0 Personal Content Library Styles
+   My List 2.0 Personal Content Library Styles
    ========================================================================== */
 
 .library-header-row {
@@ -5754,7 +5750,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 34: Viewing Insights & Activity Styles
+   Viewing Insights & Activity Dashboard Styles
    ========================================================================== */
 
 .activity-body {
@@ -6011,7 +6007,7 @@ a.user-profile-badge:hover {
 }
 
 /* ==========================================================================
-   Task 35: Admin Content Management Styles
+   Admin Content Management & CMS Styles
    ========================================================================== */
 
 .admin-content-grid {

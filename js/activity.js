@@ -1,7 +1,9 @@
 /**
- * ==========================================================================
- * Viewing Insights & Activity Controller — Task 34
- * ==========================================================================
+ * ============================================================================
+ * Netflix Clone — Viewing Insights & Activity Controller
+ * ============================================================================
+ * Aggregates and renders user watch statistics, completed titles, in-progress
+ * titles, total watch time, and chronological viewing timelines.
  */
 
 document.addEventListener('DOMContentLoaded', () => {

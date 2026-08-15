@@ -1,6 +1,10 @@
-// ==========================================================================
-// Watchlist Controller — Task 14: MongoDB Watchlist Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Watchlist ("My List") API Controller
+ * ============================================================================
+ * Manages profile-scoped watchlist queries, item additions, status updates,
+ * and deletions with duplicate prevention.
+ */
 
 const User = require('../models/User');
 const { createNotification } = require('../services/notification.service');
@@ -112,7 +116,7 @@ const addToWatchlist = async (req, res, next) => {
         user.watchlist.push(movieItem);
         await user.save();
 
-        // Safely trigger WATCHLIST_ADDED notification (Task 20)
+        // Dispatch WATCHLIST_ADDED notification asynchronously
         createNotification({
             firebaseUid: req.user.uid,
             type: 'WATCHLIST_ADDED',

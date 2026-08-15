@@ -1,6 +1,10 @@
-// ==========================================================================
-// Admin Routes — Task 23: Protected Admin & Analytics Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Administrator REST API Routes
+ * ============================================================================
+ * Defines secured routes for platform analytics, user metrics, content layout CMS,
+ * curated collection builders, and audit log history.
+ */
 
 const express = require('express');
 const router = express.Router();
@@ -28,7 +32,7 @@ router.get('/popular-movies', getPopular);
 router.get('/activity', getActivity);
 router.get('/users', getUsers);
 
-// Content Management Routes (Task 35)
+// Content Management & CMS Endpoints
 router.get('/content', getContentConfig);
 router.patch('/content/featured', updateFeaturedMovie);
 router.patch('/content/sections', updateSectionsConfig);

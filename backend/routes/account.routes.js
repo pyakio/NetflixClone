@@ -1,6 +1,9 @@
-// ==========================================================================
-// Account Routes — Task 22: Account Settings & Security Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Account Lifecycle REST API Routes
+ * ============================================================================
+ * Defines endpoints for user account management and data cascade deletion.
+ */
 
 const express = require('express');
 const router = express.Router();

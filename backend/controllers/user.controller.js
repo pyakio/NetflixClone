@@ -1,6 +1,10 @@
-// ==========================================================================
-// User Controller — Task 15: User Profile & Account Dashboard
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Account & Profile Metadata Controller
+ * ============================================================================
+ * Handles user profile retrieval, account initialization on first login,
+ * and display name synchronization.
+ */
 
 const User = require('../models/User');
 const { createNotification } = require('../services/notification.service');
@@ -87,7 +91,7 @@ const updateCurrentUser = async (req, res, next) => {
             await user.save();
         }
 
-        // Safely trigger PROFILE_UPDATED notification (Task 20)
+        // Dispatch PROFILE_UPDATED notification asynchronously
         createNotification({
             firebaseUid: req.user.uid,
             type: 'PROFILE_UPDATED',

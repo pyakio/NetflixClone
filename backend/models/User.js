@@ -1,6 +1,10 @@
-// ==========================================================================
-// User Model — Task 14: MongoDB User Schema with Watchlist
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Model & Profile-Scoped Watchlist Schema
+ * ============================================================================
+ * Defines the user document structure, authentication metadata, and compound
+ * watchlist item subdocuments ({ movieId, title, posterPath, profileId }).
+ */
 
 const mongoose = require('mongoose');
 

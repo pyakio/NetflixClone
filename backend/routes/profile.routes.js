@@ -1,6 +1,9 @@
-// ==========================================================================
-// Profile Routes — Task 21: Viewing Profile Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * Viewing Profile REST API Routes
+ * ============================================================================
+ * Defines endpoints for persona CRUD operations, active profiles, and quota controls.
+ */
 
 const express = require('express');
 const router = express.Router();

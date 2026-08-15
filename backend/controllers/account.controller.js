@@ -1,6 +1,10 @@
-// ==========================================================================
-// Account Controller — Task 22: Account Cleanup & Deletion Handlers
-// ==========================================================================
+/**
+ * ============================================================================
+ * Account Lifecycle & Cascade Deletion Controller
+ * ============================================================================
+ * Handles user account deletion requests and cascades deletions across profiles,
+ * watchlists, playback history records, and notifications.
+ */
 
 const User = require('../models/User');
 const { Profile } = require('../models/Profile');

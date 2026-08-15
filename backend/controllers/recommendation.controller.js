@@ -1,6 +1,10 @@
-// ==========================================================================
-// Recommendation Controller — Task 18: Personalized Recommendation API
-// ==========================================================================
+/**
+ * ============================================================================
+ * Personalized Recommendation API Controller
+ * ============================================================================
+ * Invokes the recommendation service to compute profile-scoped genre affinities,
+ * "Because You Watched" anchors, and personalized content collections.
+ */
 
 const { generateUserRecommendations } = require('../services/recommendation.service');
 

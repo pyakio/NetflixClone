@@ -1,6 +1,10 @@
-// ==========================================================================
-// Recommendation Service — Task 18 & 28: Advanced Profile Personalization
-// ==========================================================================
+/**
+ * ============================================================================
+ * Personalized Recommendation Engine
+ * ============================================================================
+ * Generates profile-tailored recommendation rows using weighted genre affinity
+ * scoring, recency decay heuristics, completion signals, and diversity blending.
+ */
 
 const User = require('../models/User');
 const WatchHistory = require('../models/WatchHistory');
@@ -52,16 +56,18 @@ const GENRE_NAME_TO_ID = {
 };
 
 /**
- * Generate personalized recommendations for an authenticated user & profile
- * Implements rule-based scoring (Task 28):
- * - Watch History (+5)
- * - Recency (+3 for <=7 days, +1 for <=30 days)
- * - Completion (+3 for >=90% progress)
- * - My List (+4)
- * - Excludes already watched & watchlist items
- * - Diversity blending (60-70% top affinity + 30-40% variety)
- * @param {string} firebaseUid
- * @param {string|null} profileId
+ * Generate personalized recommendations for an authenticated user & profile.
+ * 
+ * Scoring Heuristics:
+ * - Watch History Signal: +5.0 Base Weight
+ * - Recency Bonus: +3.0 (<= 7 days), +1.0 (<= 30 days)
+ * - Completion Bonus: +3.0 (>= 90% progress)
+ * - My List Signal: +4.0 Base Weight
+ * - Exclusions: Filters out titles already watched or stored in My List
+ * - Diversity Blend: 60-70% top affinity genres + 30-40% discovery variety
+ * 
+ * @param {string} firebaseUid - Firebase user unique identifier
+ * @param {string|null} profileId - Active viewing profile ID
  * @returns {Promise<Object>}
  */
 async function generateUserRecommendations(firebaseUid, profileId = null) {
@@ -103,7 +109,7 @@ async function generateUserRecommendations(firebaseUid, profileId = null) {
     const watchlistMovieIds = new Set(watchlist.map((m) => Number(m.movieId)));
     const excludedIds = new Set([...watchedMovieIds, ...watchlistMovieIds]);
 
-    // 3. Calculate Weighted Genre Affinity (Task 28 Rules)
+    // 3. Calculate Weighted Genre Affinity Scoring
     const genreWeights = {};
     const now = Date.now();
     const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;

@@ -1,6 +1,10 @@
-// ==========================================================================
-// Profile Model — Task 21: Viewing Profile Schema
-// ==========================================================================
+/**
+ * ============================================================================
+ * Viewing Profile Model & Persona Schema
+ * ============================================================================
+ * Manages distinct viewing profiles per user account (up to 5 max), including
+ * avatar selections, kids mode toggles, and compound uniqueness indices.
+ */
 
 const mongoose = require('mongoose');
 

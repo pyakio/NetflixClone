@@ -1,6 +1,9 @@
-// ==========================================================================
-// Notification Routes — Task 20: Protected Notification Endpoints
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Notification REST API Routes
+ * ============================================================================
+ * Defines endpoints for notification retrieval, unread counts, and read states.
+ */
 
 const express = require('express');
 const router = express.Router();

@@ -1,6 +1,10 @@
-// ==========================================================================
-// Notification Service — Task 20: Safe Creation, Retrieval, and Mutation
-// ==========================================================================
+/**
+ * ============================================================================
+ * User Notification Service
+ * ============================================================================
+ * Handles non-blocking notification generation, paginated retrieval, unread count
+ * calculations, and batch read-state mutations.
+ */
 
 const { Notification } = require('../models/Notification');
 

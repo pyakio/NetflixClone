@@ -1,6 +1,10 @@
-// ==========================================================================
-// Authentication Service — Task 12: Authentication & User Accounts
-// ==========================================================================
+/**
+ * ============================================================================
+ * Netflix Clone — Client Authentication Service (AuthService)
+ * ============================================================================
+ * Manages user registration, login, logout, password resets, ID token retrieval,
+ * and auth state listener subscriptions using the Firebase Web SDK.
+ */
 
 const AuthService = (() => {
 

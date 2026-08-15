@@ -1,6 +1,10 @@
-// ==========================================================================
-// Admin Audit Log Model — Task 35: Admin Mutation Audit Trail
-// ==========================================================================
+/**
+ * ============================================================================
+ * Administrator Mutation Audit Trail Schema
+ * ============================================================================
+ * Immutable append-only log capturing administrative actions, target resources,
+ * mutation payloads, originating IP addresses, and UTC timestamps.
+ */
 
 const mongoose = require('mongoose');
 
