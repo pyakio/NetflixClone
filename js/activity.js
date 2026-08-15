@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Viewing Insights & Activity Controller
+ * StreamFlix — Viewing Insights & Activity Controller
  * ============================================================================
  * Aggregates and renders user watch statistics, completed titles, in-progress
  * titles, total watch time, and chronological viewing timelines.

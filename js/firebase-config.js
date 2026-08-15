@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Firebase Web Client Configuration
+ * StreamFlix — Firebase Web Client Configuration
  * ============================================================================
  * Initializes the Firebase App SDK for client-side authentication and session
  * lifecycle management. Replace placeholder values with your Firebase Console credentials.

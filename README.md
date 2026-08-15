@@ -1,4 +1,4 @@
-# 🎬 Netflix Clone — Full-Stack Streaming Platform & Movie Discovery Engine
+# 🎬 StreamFlix — Full-Stack Streaming Platform & Movie Discovery Engine
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-pyakio%2FNetflixClone-E50914?logo=github&style=flat-square)](https://github.com/pyakio/NetflixClone)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-339933?logo=node.js&style=flat-square)](https://nodejs.org/)

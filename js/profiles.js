@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Viewing Profiles Controller ("Who's Watching?")
+ * StreamFlix — Viewing Profiles Controller ("Who's Watching?")
  * ============================================================================
  * Manages user persona selection, profile creation, avatar customization,
  * kids content filtering mode, and session persistence in sessionStorage.

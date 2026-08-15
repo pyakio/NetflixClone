@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — HTML5 Cinema Video Player & Progress Controller
+ * StreamFlix — HTML5 Cinema Video Player & Progress Controller
  * ============================================================================
  * Controls custom media playback, scrubber seeking, buffering indicators,
  * 10-second throttled progress persistence, volume control, and fullscreen.
@@ -206,9 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 release_date: '2026',
                 runtime: 115,
                 vote_average: 8.0,
-                overview: 'Experience high-definition video streaming on the Netflix Clone platform.',
-                genres: [{ name: 'Featured' }],
-                similar: { results: [] }
+                overview: 'Experience high-definition video streaming on the StreamFlix platform.',
+                voteAverage: 8.5,
+                voteCount: 1200,
+                releaseDate: '2024-01-01',
+                genres: [{ id: 28, name: 'Action' }, { id: 878, name: 'Sci-Fi' }]
             };
             renderMetadata(movieData);
             setupVideoSource(movieData);
@@ -220,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. RENDER METADATA & ACTIONS
     // ==========================================
     function renderMetadata(movie) {
-        document.title = `${movie.title} — Watch on Netflix Clone`;
+        document.title = `${movie.title} — Watch on StreamFlix`;
 
         if (movieTitleEl) movieTitleEl.textContent = movie.title;
         if (playerWatermark) playerWatermark.textContent = movie.title;

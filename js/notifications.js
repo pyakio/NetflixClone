@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Notifications & Activity Center Controller
+ * StreamFlix — Notifications & Activity Center Controller
  * ============================================================================
  * Manages user activity feeds, watchlist alerts, recommendation updates,
  * unread badges, mark-all-as-read actions, and header notification popovers.

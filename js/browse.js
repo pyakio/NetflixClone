@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Browse & Advanced Movie Discovery Controller
+ * StreamFlix — Browse & Advanced Movie Discovery Controller
  * ============================================================================
  * Manages dynamic catalog exploration, debounced full-text search, multi-faceted
  * genre pill filters, release year / rating filters, and infinite pagination.

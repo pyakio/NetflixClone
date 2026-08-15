@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Account Settings & Security Controller
+ * StreamFlix — Account Settings & Security Controller
  * ============================================================================
  * Handles user credential management, email verification status, password
  * updates, account deletion requests, and playback preferences.

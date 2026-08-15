@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Settings & Security — Netflix Clone</title>
-    <meta name="description" content="Manage your Netflix account credentials, email verification, password security, and viewing profiles.">
+    <title>Account Settings & Security — StreamFlix</title>
+    <meta name="description" content="Manage your StreamFlix account credentials, email verification, password security, and viewing profiles.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="settings-page-body">
 
     <!-- Top Navigation Bar -->
     <header class="navbar scrolled" role="banner">
         <div class="nav-left">
-            <a href="index.html" class="logo" aria-label="Netflix Clone Home">NETFLIX</a>
+            <a href="index.html" class="logo" aria-label="StreamFlix Home">STREAMFLIX</a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
             <nav class="nav-links" id="nav-links" role="navigation" aria-label="Main Navigation">
                 <a href="index.html" class="nav-link">Home</a>
@@ -38,7 +38,7 @@
         <div id="unauth-view" class="profile-guard-card" style="display: none;">
             <div class="guard-icon" aria-hidden="true">🔒</div>
             <h1 class="guard-title">Sign In Required</h1>
-            <p class="guard-message">Please sign in to view and manage your Netflix account security and settings.</p>
+            <p class="guard-message">Please sign in to view and manage your StreamFlix account security and settings.</p>
             <a href="login.html" class="btn btn-auth-submit">Sign In to Continue</a>
             <p class="auth-return"><a href="index.html" class="auth-link-secondary">← Back to Browse</a></p>
         </div>
@@ -140,7 +140,7 @@
                 <div class="settings-row no-border">
                     <div class="settings-col-label">
                         <span class="row-label">Sign Out</span>
-                        <p class="row-sublabel">Sign out of your Netflix account on this device.</p>
+                        <p class="row-sublabel">Sign out of your StreamFlix account on this device.</p>
                     </div>
                     <div class="settings-col-value">
                         <button type="button" class="btn btn-secondary-action" id="btn-settings-logout">
@@ -178,7 +178,7 @@
                 <h2 class="modal-danger-title" id="modal-delete-title">Delete Account Permanently</h2>
             </div>
             <p class="modal-danger-text">
-                This action <strong>cannot be undone</strong>. This will permanently delete your Netflix account, all viewing profiles, watch history, recommendations, and saved movies.
+                This action <strong>cannot be undone</strong>. This will permanently delete your StreamFlix account, all viewing profiles, watch history, recommendations, and saved movies.
             </p>
 
             <form id="form-delete-account" class="delete-account-form">

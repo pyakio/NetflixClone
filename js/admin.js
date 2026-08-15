@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Administrator Dashboard & Business Intelligence Controller
+ * StreamFlix — Administrator Dashboard & Business Intelligence Controller
  * ============================================================================
  * Handles platform KPI metrics calculation, content management (headline hero
  * selector, row order, curated collections), and immutable audit log views.

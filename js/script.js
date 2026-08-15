@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Core Client Application Controller
+ * StreamFlix — Core Client Application Controller
  * ============================================================================
  * Handles homepage content rendering, TMDB catalog integrations, personalized
  * content recommendations, Continue Watching shelves, watchlist mutations,

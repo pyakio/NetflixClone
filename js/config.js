@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Netflix Clone — Client Configuration & API Endpoints
+ * StreamFlix — Client Configuration & API Endpoints
  * ============================================================================
  * Defines TMDB API configurations, backend base URL resolution with dynamic
  * environment detection (localhost / production origin), and creative commons

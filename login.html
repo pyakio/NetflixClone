@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sign In — Netflix Clone. Access your personalized movie streaming experience and saved watchlist.">
-    <title>Sign In — Netflix Clone</title>
+    <meta name="description" content="Sign In — StreamFlix. Access your personalized movie streaming experience and saved watchlist.">
+    <title>Sign In — StreamFlix</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="auth-body">
 
     <!-- Auth Header / Logo -->
     <header class="auth-header">
-        <a href="index.html" class="logo" aria-label="Netflix Clone Homepage">NETFLIX</a>
+        <a href="index.html" class="logo" aria-label="StreamFlix Home">STREAMFLIX</a>
     </header>
 
     <!-- Main Auth Container -->
@@ -86,7 +86,7 @@
 
             <!-- Auth Switch / Footer -->
             <div class="auth-footer-text">
-                <p>New to Netflix? <a href="register.html" class="auth-link">Sign up now.</a></p>
+                <p>New to StreamFlix? <a href="register.html" class="auth-link">Sign up now.</a></p>
                 <p class="auth-recaptcha-text">
                     This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#" class="recaptcha-learn-more">Learn more.</a>
                 </p>
@@ -162,8 +162,8 @@
             const demoBtn = document.getElementById('btn-demo-login');
             if (demoBtn) {
                 demoBtn.addEventListener('click', () => {
-                    emailInput.value = 'demo@netflix.com';
-                    passwordInput.value = 'netflix123';
+                    emailInput.value = 'demo@streamflix.com';
+                    passwordInput.value = 'streamflix123';
                     if (typeof showToast === 'function') {
                         showToast('Filled demo credentials! Click Sign In to proceed.');
                     }
