@@ -1345,7 +1345,7 @@ main {
         font-size: 13px;
     }
 
-    /* Task 11: full-width action buttons on mobile */
+    /* Full-width action buttons on mobile viewport */
     .movie-modal-actions {
         width: 100%;
         flex-direction: column;
@@ -1428,9 +1428,6 @@ main {
     scroll-margin-top: calc(var(--navbar-height) + 16px);
 }
 
-/* ==========================================================================
-   Task 11: Watchlist Empty State
-   ========================================================================== */
 .watchlist-empty {
     padding: 48px 20px;
     display: flex;
