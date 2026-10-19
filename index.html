@@ -28,13 +28,16 @@
         </div>
 
         <div class="search-container" id="search-container">
-            <input type="search" id="search-input" placeholder="Search movies..." aria-label="Search movies" autocomplete="off">
+            <input type="search" id="search-input" placeholder="Search movies, genres..." aria-label="Search movies" autocomplete="off">
+            <span class="search-shortcut-hint">⌘K</span>
             <button type="button" class="search-close-btn" id="search-close-btn" aria-label="Close search">✕</button>
             <div class="search-suggestions-dropdown" id="search-suggestions" style="display: none;" role="listbox" aria-label="Search suggestions"></div>
         </div>
 
         <div class="nav-actions">
-            <button type="button" class="nav-action-btn" id="search-btn" aria-label="Search">Search</button>
+            <button type="button" class="nav-action-btn" id="search-btn" aria-label="Search">
+                Search <span class="search-shortcut-hint">⌘K</span>
+            </button>
             <div id="nav-auth-container" class="nav-auth-group">
                 <a href="login.html" class="btn-nav-signin" id="nav-signin-btn">Sign In</a>
             </div>
@@ -48,23 +51,21 @@
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero-content">
                 <div class="hero-series-badge">
-                    <span class="netflix-n-badge">S</span>
-                    <span class="series-badge-text">ORIGINAL SERIES</span>
+                    <span class="series-badge-text">FEATURED SPOTLIGHT</span>
                 </div>
                 <h1 id="hero-title">Stranger Things</h1>
                 <div class="hero-meta">
-                    <span class="match-score">98% Match</span>
-                    <span class="release-year">2026</span>
-                    <span class="age-rating">16+</span>
-                    <span class="duration">5 Seasons</span>
-                    <span class="quality-badge">Ultra HD 4K</span>
+                    <span class="match-score">★ 8.7</span>
+                    <span class="release-year">2016</span>
+                    <span class="duration">50m</span>
+                    <span class="quality-badge">Drama • Mystery</span>
                 </div>
                 <p class="hero-description">
                     When a young boy disappears, his friends and family uncover a mysterious supernatural world and secret government experiments.
                 </p>
                 <div class="hero-buttons">
-                    <button type="button" class="btn btn-play"><span class="btn-icon">▶</span> Play</button>
-                    <button type="button" class="btn btn-info"><span class="btn-icon">ⓘ</span> More Info</button>
+                    <button type="button" class="btn btn-play" id="hero-play-btn"><span class="btn-icon">▶</span> Play</button>
+                    <button type="button" class="btn btn-info" id="hero-info-btn"><span class="btn-icon">ⓘ</span> More Info</button>
                 </div>
             </div>
         </section>
@@ -72,25 +73,41 @@
         <!-- Continue Watching Shelf -->
         <section class="movie-section continue-watching-section" id="continue-watching-section" style="display: none;">
             <h2 class="section-title">Continue Watching</h2>
-            <div class="movie-row" id="continue-watching-row"></div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="continue-watching-row">‹</button>
+                <div class="movie-row" id="continue-watching-row"></div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="continue-watching-row">›</button>
+            </div>
         </section>
 
         <!-- Because You Watched Recommendation Shelf -->
         <section class="movie-section personalized-section" id="because-you-watched-section" style="display: none;">
             <h2 class="section-title" id="because-you-watched-title">Because You Watched</h2>
-            <div class="movie-row" id="because-you-watched-row"></div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="because-you-watched-row">‹</button>
+                <div class="movie-row" id="because-you-watched-row"></div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="because-you-watched-row">›</button>
+            </div>
         </section>
 
         <!-- My List Picks Recommendation Shelf -->
         <section class="movie-section personalized-section" id="my-list-picks-section" style="display: none;">
             <h2 class="section-title">From Your List & Similar</h2>
-            <div class="movie-row" id="my-list-picks-row"></div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="my-list-picks-row">‹</button>
+                <div class="movie-row" id="my-list-picks-row"></div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="my-list-picks-row">›</button>
+            </div>
         </section>
 
         <!-- Top Picks For You Recommendation Shelf -->
         <section class="movie-section personalized-section" id="for-you-section" style="display: none;">
             <h2 class="section-title">Top Picks For You</h2>
-            <div class="movie-row" id="for-you-row"></div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="for-you-row">‹</button>
+                <div class="movie-row" id="for-you-row"></div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="for-you-row">›</button>
+            </div>
         </section>
 
         <!-- Trending Movies Section -->
@@ -99,8 +116,12 @@
                 <h2 id="trending-title" class="section-title">Trending Now</h2>
                 <a href="browse.html?sort=trending" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
             </div>
-            <div class="movie-row" id="trending-row">
-                <div class="section-loading">Loading movies...</div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="trending-row">‹</button>
+                <div class="movie-row" id="trending-row">
+                    <div class="section-loading">Loading movies...</div>
+                </div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="trending-row">›</button>
             </div>
         </section>
 
@@ -110,8 +131,12 @@
                 <h2 id="popular-title" class="section-title">Popular on StreamFlix</h2>
                 <a href="browse.html?sort=popular" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
             </div>
-            <div class="movie-row" id="popular-row">
-                <div class="section-loading">Loading movies...</div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="popular-row">‹</button>
+                <div class="movie-row" id="popular-row">
+                    <div class="section-loading">Loading movies...</div>
+                </div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="popular-row">›</button>
             </div>
         </section>
 
@@ -121,8 +146,12 @@
                 <h2 id="action-title" class="section-title">Action Thrillers</h2>
                 <a href="browse.html?genre=28" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
             </div>
-            <div class="movie-row" id="action-row">
-                <div class="section-loading">Loading movies...</div>
+            <div class="movie-row-wrapper">
+                <button type="button" class="row-nav-btn prev" aria-label="Scroll left" data-row="action-row">‹</button>
+                <div class="movie-row" id="action-row">
+                    <div class="section-loading">Loading movies...</div>
+                </div>
+                <button type="button" class="row-nav-btn next" aria-label="Scroll right" data-row="action-row">›</button>
             </div>
         </section>
 
@@ -133,15 +162,15 @@
                 <a href="browse.html" class="section-explore-link">Explore All <span class="explore-arrow">›</span></a>
             </div>
             <div class="genre-cards-grid" id="genre-cards-grid">
-                <a href="browse.html?genre=28" class="genre-card genre-action">Action</a>
-                <a href="browse.html?genre=12" class="genre-card genre-adventure">Adventure</a>
-                <a href="browse.html?genre=16" class="genre-card genre-animation">Animation</a>
-                <a href="browse.html?genre=35" class="genre-card genre-comedy">Comedy</a>
-                <a href="browse.html?genre=80" class="genre-card genre-crime">Crime</a>
-                <a href="browse.html?genre=18" class="genre-card genre-drama">Drama</a>
-                <a href="browse.html?genre=27" class="genre-card genre-horror">Horror</a>
-                <a href="browse.html?genre=878" class="genre-card genre-scifi">Sci-Fi</a>
-                <a href="browse.html?genre=53" class="genre-card genre-thriller">Thriller</a>
+                <a href="browse.html?genre=28" class="genre-card"><span class="genre-icon">💥</span><span class="genre-name">Action</span></a>
+                <a href="browse.html?genre=12" class="genre-card"><span class="genre-icon">🧭</span><span class="genre-name">Adventure</span></a>
+                <a href="browse.html?genre=16" class="genre-card"><span class="genre-icon">🎨</span><span class="genre-name">Animation</span></a>
+                <a href="browse.html?genre=35" class="genre-card"><span class="genre-icon">🎭</span><span class="genre-name">Comedy</span></a>
+                <a href="browse.html?genre=80" class="genre-card"><span class="genre-icon">🔍</span><span class="genre-name">Crime</span></a>
+                <a href="browse.html?genre=18" class="genre-card"><span class="genre-icon">🎬</span><span class="genre-name">Drama</span></a>
+                <a href="browse.html?genre=27" class="genre-card"><span class="genre-icon">👻</span><span class="genre-name">Horror</span></a>
+                <a href="browse.html?genre=878" class="genre-card"><span class="genre-icon">🚀</span><span class="genre-name">Sci-Fi</span></a>
+                <a href="browse.html?genre=53" class="genre-card"><span class="genre-icon">⚡</span><span class="genre-name">Thriller</span></a>
             </div>
         </section>
 

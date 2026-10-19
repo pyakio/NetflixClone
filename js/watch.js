@@ -229,24 +229,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Year
         if (movieYearEl) {
-            const year = movie.release_date ? movie.release_date.split('-')[0] : '2026';
-            movieYearEl.textContent = year;
+            const rawDate = movie.release_date || movie.first_air_date;
+            const year = rawDate ? rawDate.split('-')[0] : null;
+            if (year) {
+                movieYearEl.textContent = year;
+                movieYearEl.style.display = '';
+            } else {
+                movieYearEl.style.display = 'none';
+            }
         }
 
         // Rating
         if (movieRatingEl) {
-            const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '8.0';
-            movieRatingEl.textContent = `★ ${rating}`;
+            const vote = (typeof movie.vote_average === 'number' && movie.vote_average > 0) ? movie.vote_average : (typeof movie.voteAverage === 'number' && movie.voteAverage > 0 ? movie.voteAverage : null);
+            if (vote) {
+                movieRatingEl.textContent = `★ ${vote.toFixed(1)}`;
+                movieRatingEl.style.display = '';
+            } else {
+                movieRatingEl.style.display = 'none';
+            }
         }
 
         // Runtime
         if (movieRuntimeEl) {
-            if (movie.runtime) {
+            if (movie.runtime && Number(movie.runtime) > 0) {
                 const hours = Math.floor(movie.runtime / 60);
                 const mins = movie.runtime % 60;
                 movieRuntimeEl.textContent = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+                movieRuntimeEl.style.display = '';
             } else {
-                movieRuntimeEl.textContent = '1h 55m';
+                movieRuntimeEl.style.display = 'none';
             }
         }
 

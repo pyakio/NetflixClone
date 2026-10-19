@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             myListPicksSection.style.display = 'none';
             forYouSection.style.display = 'none';
             if (heroBadgeEl) heroBadgeEl.remove();
-            currentHeroMovie = null;
+            currentHeroMovie = (MOCK_DATASET.popular && MOCK_DATASET.popular[0]) ? MOCK_DATASET.popular[0] : null;
             return;
         }
 
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             myListPicksSection.style.display = 'none';
             forYouSection.style.display = 'none';
             if (heroBadgeEl) heroBadgeEl.remove();
-            currentHeroMovie = null;
+            currentHeroMovie = (MOCK_DATASET.popular && MOCK_DATASET.popular[0]) ? MOCK_DATASET.popular[0] : null;
             return;
         }
 
@@ -361,9 +361,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const img = document.createElement('img');
         img.setAttribute('loading', 'lazy');
-        img.alt = `${titleText} poster`;
         const posterSrc = getPosterUrl(historyItem.posterPath || historyItem.poster_path);
-        if (posterSrc) img.src = posterSrc;
+        if (posterSrc) {
+            img.src = posterSrc;
+            img.onerror = () => {
+                img.style.display = 'none';
+                article.classList.add('poster-fallback');
+            };
+        } else {
+            img.style.display = 'none';
+            article.classList.add('poster-fallback');
+        }
 
         const progressContainer = document.createElement('div');
         progressContainer.className = 'card-progress-container';
@@ -947,7 +955,16 @@ document.addEventListener('DOMContentLoaded', () => {
         img.setAttribute('height', '300');
         img.alt = `${titleText} poster`;
         const posterSrc = getPosterUrl(movie.poster_path || movie.posterPath);
-        if (posterSrc) img.src = posterSrc;
+        if (posterSrc) {
+            img.src = posterSrc;
+            img.onerror = () => {
+                img.style.display = 'none';
+                article.classList.add('poster-fallback');
+            };
+        } else {
+            img.style.display = 'none';
+            article.classList.add('poster-fallback');
+        }
 
         const movieInfoDiv = document.createElement('div');
         movieInfoDiv.className = 'movie-info';
@@ -957,21 +974,27 @@ document.addEventListener('DOMContentLoaded', () => {
         movieInfoDiv.appendChild(h3);
 
         const vote = movie.vote_average || movie.voteAverage;
-        if (typeof vote === 'number' && vote > 0) {
+        const releaseDate = movie.release_date || movie.first_air_date;
+        const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : null;
+
+        if ((typeof vote === 'number' && vote > 0) || releaseYear) {
             const metaRow = document.createElement('div');
             metaRow.className = 'card-meta-row';
 
-            const matchSpan = document.createElement('span');
-            matchSpan.className = 'card-match-badge';
-            const matchScore = Math.min(99, Math.max(75, Math.round(vote * 10) + 5));
-            matchSpan.textContent = `${matchScore}% Match`;
+            if (typeof vote === 'number' && vote > 0) {
+                const ratingSpan = document.createElement('span');
+                ratingSpan.className = 'card-rating-badge';
+                ratingSpan.textContent = `★ ${vote.toFixed(1)}`;
+                metaRow.appendChild(ratingSpan);
+            }
 
-            const ratingSpan = document.createElement('span');
-            ratingSpan.className = 'card-rating-badge';
-            ratingSpan.textContent = `★ ${vote.toFixed(1)}`;
+            if (releaseYear && !isNaN(releaseYear)) {
+                const yearSpan = document.createElement('span');
+                yearSpan.className = 'card-year-badge';
+                yearSpan.textContent = `${releaseYear}`;
+                metaRow.appendChild(yearSpan);
+            }
 
-            metaRow.appendChild(matchSpan);
-            metaRow.appendChild(ratingSpan);
             movieInfoDiv.appendChild(metaRow);
         }
 
@@ -2275,6 +2298,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 23. APPLICATION INITIALIZATION
     // ==========================================
     async function initApplication() {
+        if (!currentHeroMovie && MOCK_DATASET.popular && MOCK_DATASET.popular.length > 0) {
+            currentHeroMovie = MOCK_DATASET.popular[0];
+        }
+
         const baseUrl  = (typeof TMDB_BASE_URL  !== 'undefined') ? TMDB_BASE_URL  : 'https://api.themoviedb.org/3';
         const apiKey   = (typeof TMDB_API_KEY   !== 'undefined') ? TMDB_API_KEY   : '';
         const actionId = (typeof TMDB_GENRES    !== 'undefined' && TMDB_GENRES.ACTION) ? TMDB_GENRES.ACTION : 28;
@@ -2293,6 +2320,44 @@ document.addEventListener('DOMContentLoaded', () => {
         renderWatchlist();
         await renderContinueWatching();
         await renderPersonalizedSections();
+
+        // Wire horizontal movie row prev/next buttons
+        document.querySelectorAll('.row-nav-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const rowId = btn.getAttribute('data-row');
+                const rowEl = rowId ? id(rowId) : btn.parentElement.querySelector('.movie-row');
+                if (!rowEl) return;
+                const scrollDistance = Math.max(300, rowEl.clientWidth * 0.75);
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (btn.classList.contains('prev')) {
+                    rowEl.scrollBy({ left: -scrollDistance, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+                } else {
+                    rowEl.scrollBy({ left: scrollDistance, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+                }
+            });
+        });
+
+        // Global search keyboard shortcuts (⌘K / Ctrl+K & Escape)
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                if (searchContainer && searchInput) {
+                    if (searchContainer.classList.contains('active')) {
+                        searchInput.focus();
+                    } else {
+                        openSearch();
+                        if (!searchInput.value.trim()) {
+                            renderRecentSearches();
+                        }
+                    }
+                }
+            } else if (e.key === 'Escape') {
+                if (searchContainer && searchContainer.classList.contains('active')) {
+                    closeSearch();
+                }
+            }
+        });
     }
 
     window.addEventListener('scroll', () => {

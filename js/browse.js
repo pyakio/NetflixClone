@@ -477,7 +477,16 @@ document.addEventListener('DOMContentLoaded', () => {
         img.setAttribute('height', '300');
         img.alt = `${titleText} poster`;
         const posterSrc = getPosterUrl(movie.poster_path || movie.posterPath);
-        if (posterSrc) img.src = posterSrc;
+        if (posterSrc) {
+            img.src = posterSrc;
+            img.onerror = () => {
+                img.style.display = 'none';
+                article.classList.add('poster-fallback');
+            };
+        } else {
+            img.style.display = 'none';
+            article.classList.add('poster-fallback');
+        }
 
         const movieInfoDiv = document.createElement('div');
         movieInfoDiv.className = 'movie-info';
@@ -486,21 +495,27 @@ document.addEventListener('DOMContentLoaded', () => {
         h3.textContent = titleText;
         movieInfoDiv.appendChild(h3);
 
-        if (typeof vote === 'number' && vote > 0) {
+        const releaseDate = movie.release_date || movie.first_air_date;
+        const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : null;
+
+        if ((typeof vote === 'number' && vote > 0) || releaseYear) {
             const metaRow = document.createElement('div');
             metaRow.className = 'card-meta-row';
 
-            const matchSpan = document.createElement('span');
-            matchSpan.className = 'card-match-badge';
-            const matchScore = Math.min(99, Math.max(75, Math.round(vote * 10) + 5));
-            matchSpan.textContent = `${matchScore}% Match`;
+            if (typeof vote === 'number' && vote > 0) {
+                const ratingSpan = document.createElement('span');
+                ratingSpan.className = 'card-rating-badge';
+                ratingSpan.textContent = `★ ${vote.toFixed(1)}`;
+                metaRow.appendChild(ratingSpan);
+            }
 
-            const ratingSpan = document.createElement('span');
-            ratingSpan.className = 'card-rating-badge';
-            ratingSpan.textContent = `★ ${vote.toFixed(1)}`;
+            if (releaseYear && !isNaN(releaseYear)) {
+                const yearSpan = document.createElement('span');
+                yearSpan.className = 'card-year-badge';
+                yearSpan.textContent = `${releaseYear}`;
+                metaRow.appendChild(yearSpan);
+            }
 
-            metaRow.appendChild(matchSpan);
-            metaRow.appendChild(ratingSpan);
             movieInfoDiv.appendChild(metaRow);
         }
 
@@ -701,6 +716,21 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchBrowseMovies(1, false);
         });
     }
+
+    // Global shortcut (⌘K / Ctrl+K) to focus search
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (browseSearchInput) {
+                browseSearchInput.focus();
+                browseSearchInput.select();
+            }
+        } else if (e.key === 'Escape') {
+            if (document.activeElement === browseSearchInput) {
+                browseSearchInput.blur();
+            }
+        }
+    });
     if (filterForm) {
         filterForm.addEventListener('submit', (e) => {
             e.preventDefault();
